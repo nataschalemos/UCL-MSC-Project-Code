@@ -66,8 +66,8 @@ print(f"Computation device: {device}\n")
 
 # Define learning parameters
 config = {
-    "batch_size": 16,
-    "epochs": 10,
+    "batch_size": 200,
+    "epochs": 100,
     "learning_rate": 5e-5,
     "optimizer": optim.Adam,
     "scheduler": newbob,
