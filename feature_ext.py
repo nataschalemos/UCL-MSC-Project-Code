@@ -58,13 +58,13 @@ class EmotionDataPreprocessing():
     def __init__(self):
 
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        cp = torch.load('/Volumes/TOSHIBA EXT/Code/Paper1&2/vq-wav2vec_kmeans.pt', map_location=device)
+        cp = torch.load('/Volumes/TOSHIBA EXT/Code/Models/vq-wav2vec_kmeans.pt', map_location=device)
         self.model = Wav2VecModel.build_model(cp['args'], task=None)
         self.model.load_state_dict(cp['model'])
         self.model.eval()
 
         # Roberta wav2vec
-        self.roberta = RobertaModel.from_pretrained('/Volumes/TOSHIBA EXT/Code/Paper1&2/bert_kmeans',checkpoint_file='bert_kmeans.pt')
+        self.roberta = RobertaModel.from_pretrained('/Volumes/TOSHIBA EXT/Code/Models/bert_kmeans',checkpoint_file='bert_kmeans.pt')
 
         self.roberta.eval()
 

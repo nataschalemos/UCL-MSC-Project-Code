@@ -41,7 +41,7 @@ wdir = '/Volumes/TOSHIBA EXT/Code/'
 # Define directory with data
 data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
 # Define directory with downloaded models
-models_dir = wdir + 'Paper1&2/bert_kmeans/'
+models_dir = wdir + 'Models/bert_kmeans/'
 
 # Define path to "labels_train_t.txt" file
 labels_file = data_dir + 'labels_train_t.txt'
