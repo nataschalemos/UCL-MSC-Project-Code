@@ -62,7 +62,11 @@ Additionally, two models need to be downloaded using the following links:
 
 To train the model run the following command in the terminal:
 
-python main.py <path_to_data> 
+python main.py <path_to_dir> <path_to_data> <path_to_models>
+
+- <path_to_dir>: path to directory with scripts
+- <path_to_data>: path to directory with data
+- <path_to_models> path to directory containing downloaded models
 
 ## References
 [1] https://arxiv.org/pdf/2010.14102.pdf
