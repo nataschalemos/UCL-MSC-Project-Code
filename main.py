@@ -30,18 +30,18 @@ Variables to define - change the variables below accordingly (~ should only have
 """
 
 # Define path to directory with files
-# wdir = sys.argv[1]
+wdir = sys.argv[1]
 # Define directory with data
-# data_dir = sys.argv[2]
+data_dir = sys.argv[2]
 # Define directory with downloaded models
-# models_dir = sys.argv[3]
+models_dir = sys.argv[3]
 
-# Define path to directory with files
-wdir = '/Volumes/TOSHIBA EXT/Code/'
-# Define directory with data
-data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
-# Define directory with downloaded models
-models_dir = wdir + 'Models/bert_kmeans/'
+# # Define path to directory with files
+# wdir = '/Volumes/TOSHIBA EXT/Code/'
+# # Define directory with data
+# data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
+# # Define directory with downloaded models
+# models_dir = wdir + 'Models/bert_kmeans/'
 
 # Define path to "labels_train_t.txt" file
 labels_file = data_dir + 'labels_train_t.txt'
