@@ -90,8 +90,11 @@ train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
 val_label_files = label_files[label_files[0].str.contains('s_5')]
 
 # Print number of sentences per emotion in each train/val set
-train_num_emotions = get_num_sentences(train_label_files)
-val_num_emotions = get_num_sentences(val_label_files)
+train_num = get_num_sentences(train_label_files)
+val_num = get_num_sentences(val_label_files)
+print("\nNumber of sentences per emotion: ")
+print("Train dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".format(train_num[0], train_num[1], train_num[2], train_num[3]))
+print("\nVal dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".format(val_num[0], val_num[1], val_num[2], val_num[3]))
 
 # Load dataset and dataloader
 train_dataset = IemocapDataset(labels_file=train_label_files,

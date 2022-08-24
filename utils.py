@@ -23,10 +23,13 @@ def collate_batch(batch):
 def get_num_sentences(dataset_files):
 
     dataset_size = len(dataset_files)
-    num_sentences = np.zeros((dataset_size, 5))
+    num_sentences = np.zeros(4)
 
     for idx in range(dataset_size):
         file_name, class_value = dataset_files.iloc[idx]
-        num_sentences[idx, class_value] += 1
+        if class_value == 1 or class_value == 2:
+            num_sentences[1] += 1
+        else:
+            num_sentences[class_value] += 1
 
     return num_sentences
