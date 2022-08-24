@@ -1,7 +1,8 @@
 # Custom dataset to wrap TSB and TAB datasets
 
 """
-Code adapted and modified from: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
+Code adapted and modified from: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html,
+https://github.com/shamanez/BERT-like-is-All-You-Need/blob/master/fairseq/data/raw_audio_text_dataset.py
 """
 
 import numpy as np
@@ -15,11 +16,10 @@ import librosa
 # from torchvision import transforms
 import pickle
 
-
 class IemocapDataset(Dataset):
     """IEMOCAP dataset"""
 
-    def __init__(self, labels_file, dir, max_text_tokens=512, max_audio_tokens=512, transform=None):
+    def __init__(self, labels_file, dir, device, max_text_tokens=512, max_audio_tokens=2048, transform=None):
         """
         Args:
             labels_file (string): Path to the csv file with labels. ('/Volumes/TOSHIBA EXT/Code/IEMOCAP/labels_train_t.txt')
@@ -29,6 +29,7 @@ class IemocapDataset(Dataset):
         """
         self.labels = labels_file
         self.dir = dir
+        self.device = device
         self.max_text_tokens = max_text_tokens
         self.max_audio_tokens = max_audio_tokens
         self.transform = transform
@@ -43,19 +44,25 @@ class IemocapDataset(Dataset):
         file_name = os.path.splitext(file_name)[0]
 
         SpeechBERT_tks_file_name = os.path.join(self.dir + 'vqw2vTokens', file_name + '.txt')
-        Roberta_tks_file_name = os.path.join(self.dir + 'GPT2Tokens', file_name + '.pkl')
+        Roberta_tks_file_name = os.path.join(self.dir + 'GPT2Tokens', file_name + '.txt')
         TAB_emb_file_name = os.path.join(self.dir + 'FullBertEmb', file_name + '.txt')
 
         # Load sample embedding vectors
-        open_file = open(Roberta_tks_file_name, "rb")
-        Roberta_tokens = pickle.load(open_file)
-        open_file.close()
-        if len(Roberta_tokens) > self.max_text_tokens:
-            Roberta_tokens = Roberta_tokens[:self.max_text_tokens]
+        # Text data (Roberta Tokens)
+        with open(Roberta_tks_file_name, 'r') as f:
+            words = []
+            for line in f:
+                words.extend(line.strip().split('\t'))
+        tokensized_text = [int(word) for word in words]
+        Roberta_tokens = torch.from_numpy(np.array(tokensized_text))
 
-        SpeechBERT_tokens = np.loadtxt(SpeechBERT_tks_file_name)
-        if SpeechBERT_tokens.size > self.max_audio_tokens:
-            SpeechBERT_tokens = SpeechBERT_tokens[:self.max_audio_tokens]
+        # Audio data (wav2vec Tokens)
+        with open(SpeechBERT_tks_file_name, 'r') as f:
+            words = []
+            for line in f:
+                words.extend(line.strip().split('\t'))
+        tokensized_audio = [int(word) for word in words]
+        SpeechBERT_tokens = torch.from_numpy(np.array(tokensized_audio))
 
         TAB_embedding = np.loadtxt(TAB_emb_file_name)
 
@@ -85,10 +92,10 @@ class ToTensor(object):
         Roberta_tokens, SpeechBERT_tokens, TAB_embedding, label = sample['Roberta_tokens'], sample['SpeechBERT_tokens'], \
                                                                   sample['TAB_embedding'], sample['label']
 
-        Roberta_tokens = torch.tensor(Roberta_tokens)
-        Roberta_tokens = Roberta_tokens.long()
-        SpeechBERT_tokens = torch.from_numpy(SpeechBERT_tokens)
-        SpeechBERT_tokens = SpeechBERT_tokens.long()
+        #Roberta_tokens = torch.tensor(Roberta_tokens)
+        #Roberta_tokens = Roberta_tokens.long()
+        #SpeechBERT_tokens = torch.from_numpy(SpeechBERT_tokens)
+        #SpeechBERT_tokens = SpeechBERT_tokens.long()
         TAB_embedding = torch.from_numpy(TAB_embedding)
         label = torch.from_numpy(label)
 

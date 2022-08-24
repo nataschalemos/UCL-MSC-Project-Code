@@ -114,13 +114,38 @@ class EmotionDataPreprocessing():
 GPT-2 Text Tokens Extraction
 """
 
+# def create_gpt2_tokens():
+#     path_to_text = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/Text/"
+#     path_to_emb = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/GPT2Tokens/"
+#     files = os.listdir(path_to_text)
+#
+#     tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+#     tokenizer.pad_token = tokenizer.eos_token
+#
+#     prog_bar = tqdm(enumerate(files), total=len(files))
+#
+#     for _, f in prog_bar:
+#         if f.endswith(".txt"):
+#             # Load audio transcriptions
+#             txt_file = open(path_to_text + f, 'r')
+#             txt = txt_file.read()
+#
+#             # Create tokens
+#             tokens = tokenizer(txt)['input_ids']
+#
+#             # Save tokens
+#             file_name = os.path.splitext(f)[0]
+#             with open(path_to_emb + file_name + '.pkl', "wb") as fp:
+#                 pickle.dump(tokens, fp)
+
+
 def create_gpt2_tokens():
     path_to_text = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/Text/"
     path_to_emb = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/GPT2Tokens/"
     files = os.listdir(path_to_text)
 
-    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-    tokenizer.pad_token = tokenizer.eos_token
+    roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
+    roberta.eval()
 
     prog_bar = tqdm(enumerate(files), total=len(files))
 
@@ -131,9 +156,12 @@ def create_gpt2_tokens():
             txt = txt_file.read()
 
             # Create tokens
-            tokens = tokenizer(txt)['input_ids']
+            tokens = roberta.encode(txt)
+            tokens = tokens.tolist()
 
             # Save tokens
-            file_name = os.path.splitext(f)[0]
-            with open(path_to_emb + file_name + '.pkl', "wb") as fp:
-                pickle.dump(tokens, fp)
+            output_file = path_to_emb + f
+
+            with open(output_file, 'w') as f1:
+                for item in tokens:
+                    f1.write(str(item) + '\t')

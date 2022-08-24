@@ -1,5 +1,6 @@
 """
 This script is used to train and evaluate a model for multimodal emotion recognition.
+For new implementation of dataset loader
 
 Notes:
 Loss function: large-margin softmax loss function
@@ -21,7 +22,7 @@ from dataset_loader import IemocapDataset, ToTensor
 from train_function import fit
 from validation_function import validate
 from model_structure import newbob, Fusion
-from utils import collate_batch, get_num_sentences
+from utils import collate_tokens, collater, get_num_sentences
 
 from fairseq.models.roberta import RobertaModel
 
@@ -99,21 +100,23 @@ print("Val dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".form
 # Load dataset and dataloader
 train_dataset = IemocapDataset(labels_file=train_label_files,
                                dir=data_dir,
-                               max_text_tokens=100,
-                               max_audio_tokens=310,
+                               device=device,
+                               max_text_tokens=512,
+                               max_audio_tokens=2048,
                                transform=ToTensor())
 
 val_dataset = IemocapDataset(labels_file=val_label_files,
                              dir=data_dir,
-                             max_text_tokens=100,
-                             max_audio_tokens=310,
+                             device=device,
+                             max_text_tokens=512,
+                             max_audio_tokens=2048,
                              transform=ToTensor())
 
 train_dataloader = DataLoader(train_dataset, batch_size=config["batch_size"],
-                              shuffle=True, num_workers=0, collate_fn=collate_batch)
+                              shuffle=True, num_workers=0, collate_fn=collater)
 
 val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"],
-                            shuffle=False, num_workers=0, collate_fn=collate_batch)
+                            shuffle=False, num_workers=0, collate_fn=collater)
 
 # Load sub-models
 roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
