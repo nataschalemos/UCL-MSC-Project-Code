@@ -29,7 +29,9 @@ def get_num_sentences(dataset_files):
         file_name, class_value = dataset_files.iloc[idx]
         if class_value == 1 or class_value == 2:
             num_sentences[1] += 1
-        else:
+        elif class_value == 0:
             num_sentences[class_value] += 1
+        else:
+            num_sentences[class_value-1] += 1
 
     return num_sentences
