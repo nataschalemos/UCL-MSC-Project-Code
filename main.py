@@ -92,8 +92,8 @@ wandb.config
 # Split data into training and validation data
 label_files = pd.read_csv(labels_file, header=None, delimiter='\t')
 
-# train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
-train_label_files = label_files[label_files[0].str.contains('s_1')]
+train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
+# train_label_files = label_files[label_files[0].str.contains('s_1')]
 val_label_files = label_files[label_files[0].str.contains('s_5')]
 
 # Print number of sentences per emotion in each train/val set
