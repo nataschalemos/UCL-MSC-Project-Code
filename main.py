@@ -32,19 +32,19 @@ from fairseq.models.roberta import RobertaModel
 Variables to define - change the variables below accordingly (~ should only have to change wdir)
 """
 
-# Define path to directory with files
-wdir = sys.argv[1]
-# Define directory with data
-data_dir = sys.argv[2]
-# Define directory with downloaded models
-models_dir = sys.argv[3]
-
 # # Define path to directory with files
-# wdir = '/Volumes/TOSHIBA EXT/Code/'
+# wdir = sys.argv[1]
 # # Define directory with data
-# data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
+# data_dir = sys.argv[2]
 # # Define directory with downloaded models
-# models_dir = wdir + 'Models/bert_kmeans/'
+# models_dir = sys.argv[3]
+
+# Define path to directory with files
+wdir = '/Volumes/TOSHIBA EXT/Code/'
+# Define directory with data
+data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
+# Define directory with downloaded models
+models_dir = wdir + 'Models/bert_kmeans/'
 
 # Define path to "labels_train_t.txt" file
 labels_file = data_dir + 'labels_train_t.txt'
@@ -93,8 +93,8 @@ wandb.config
 # Split data into training and validation data
 label_files = pd.read_csv(labels_file, header=None, delimiter='\t')
 
-train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
-#train_label_files = label_files[label_files[0].str.contains('s_1')]
+#train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
+train_label_files = label_files[label_files[0].str.contains('s_1')]
 val_label_files = label_files[label_files[0].str.contains('s_5')]
 
 # Print number of sentences per emotion in each train/val set

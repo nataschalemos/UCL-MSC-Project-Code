@@ -83,7 +83,7 @@ class Fusion(nn.Module):  # (note: this class defines the whole model)
         out = self.layer_out(out)  # 200,4
 
         if self.out_activation:
-            out = self.out_activation(out)
+            out = self.out_activation(out, dim=-1)
 
             #out = F.relu(self.layer_cat_out(out)) # instead of the other two "out" above
         return out, A3
