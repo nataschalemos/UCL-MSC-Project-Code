@@ -13,6 +13,7 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader
 import torch.optim as optim
+from torch.nn import MultiMarginLoss
 import sys
 
 from pytorch_metric_learning import losses
@@ -65,18 +66,22 @@ Train model
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Computation device: {device}\n")
 
+# Define loss functions
+large_margin_softmax_loss = losses.LargeMarginSoftmaxLoss(num_classes=4,
+                                                          embedding_size=4,
+                                                          margin=4,
+                                                          scale=1).to(device)
+multi_margin_loss = MultiMarginLoss(margin=1.0, weight=None)
+
 # Define learning parameters
 config = {
-    "batch_size": 200,
-    "epochs": 100,
+    "batch_size": 16,
+    "epochs": 50,
     "learning_rate": 5e-5,
     "optimizer": optim.Adam,
     "scheduler": newbob,
     "factor": 0.5,
-    "criterion": losses.LargeMarginSoftmaxLoss(num_classes=4,
-                                               embedding_size=4,
-                                               margin=4,
-                                               scale=1).to(device)
+    "criterion": multi_margin_loss.to(device)
 }
 
 # Start a W&B run
@@ -87,15 +92,18 @@ wandb.config
 # Split data into training and validation data
 label_files = pd.read_csv(labels_file, header=None, delimiter='\t')
 
-train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
+# train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
+train_label_files = label_files[label_files[0].str.contains('s_1')]
 val_label_files = label_files[label_files[0].str.contains('s_5')]
 
 # Print number of sentences per emotion in each train/val set
 train_num = get_num_sentences(train_label_files)
 val_num = get_num_sentences(val_label_files)
 print("\nNumber of sentences per emotion: ")
-print("Train dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".format(train_num[0], train_num[1], train_num[2], train_num[3]))
-print("Val dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".format(val_num[0], val_num[1], val_num[2], val_num[3]))
+print("Train dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".format(train_num[0], train_num[1],
+                                                                                     train_num[2], train_num[3]))
+print("Val dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".format(val_num[0], val_num[1], val_num[2],
+                                                                                   val_num[3]))
 
 # Load dataset and dataloader
 train_dataset = IemocapDataset(labels_file=train_label_files,
@@ -120,7 +128,7 @@ val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"],
 
 # Load sub-models
 roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
-speechBert = RobertaModel.from_pretrained(models_dir,checkpoint_file='bert_kmeans.pt')
+speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
 for param in speechBert.parameters():
     param.requires_grad = False
 
@@ -164,7 +172,6 @@ for epoch in range(config["epochs"]):
 
     # Update learning rate scheduler
     scheduler.step(val_epoch_accuracy)
-
 
 """
 Save model
