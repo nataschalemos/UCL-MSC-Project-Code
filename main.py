@@ -15,6 +15,7 @@ from torch.utils.data import DataLoader
 import torch.optim as optim
 from torch.nn import MultiMarginLoss
 import sys
+import torch.nn.functional as F
 
 from pytorch_metric_learning import losses
 import wandb
@@ -92,8 +93,8 @@ wandb.config
 # Split data into training and validation data
 label_files = pd.read_csv(labels_file, header=None, delimiter='\t')
 
-# train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
-train_label_files = label_files[label_files[0].str.contains('s_1')]
+train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
+#train_label_files = label_files[label_files[0].str.contains('s_1')]
 val_label_files = label_files[label_files[0].str.contains('s_5')]
 
 # Print number of sentences per emotion in each train/val set
@@ -133,7 +134,8 @@ for param in speechBert.parameters():
     param.requires_grad = False
 
 # Instantiate model class
-model = Fusion(roberta, speechBert).to(device)
+# remember that when using "large_margin_softmax_loss" don't need to add softmax to output layer as the loss funciton does this automatically
+model = Fusion(roberta, speechBert, out_activation=F.softmax).to(device)
 
 # Instantiate optimizer class
 optimizer = config["optimizer"](model.parameters(), lr=config["learning_rate"])

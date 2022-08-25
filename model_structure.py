@@ -61,7 +61,7 @@ class Time_async(nn.Module):
 
 
 class Fusion(nn.Module):  # (note: this class defines the whole model)
-    def __init__(self, roberta, speechBert, fuse_dim=128, output_dim=4):  # NOTE: changed output_dim from 5 to 4
+    def __init__(self, roberta, speechBert, out_activation=None, fuse_dim=128, output_dim=4):  # NOTE: changed output_dim from 5 to 4
         super(Fusion, self).__init__()
 
         self.b1 = roberta.eval()
@@ -69,6 +69,7 @@ class Fusion(nn.Module):  # (note: this class defines the whole model)
         self.b3 = Time_async()
         self.layer_cat = nn.Linear(1024 + 768 + 64 * 5, fuse_dim)
         self.layer_out = nn.Linear(fuse_dim, output_dim, bias=False)
+        self.out_activation = out_activation
 
         self.layer_cat_out = nn.Linear(1024 + 768 + 64 * 5, output_dim)
 
@@ -81,7 +82,10 @@ class Fusion(nn.Module):  # (note: this class defines the whole model)
         out = F.relu(self.layer_cat(out))  # 200,128 # TODO: check if dim fuse_dim=128 is appropriate
         out = self.layer_out(out)  # 200,4
 
-        #out = F.relu(self.layer_cat_out(out))
+        if self.out_activation:
+            out = self.out_activation(out)
+
+            #out = F.relu(self.layer_cat_out(out)) # instead of the other two "out" above
         return out, A3
 
 
