@@ -28,6 +28,10 @@ from utils import collate_tokens, collater, get_num_sentences
 
 from fairseq.models.roberta import RobertaModel
 
+# Define seed for reproducibility
+seed = 2022
+torch.manual_seed(seed)
+
 """
 Variables to define - change the variables below accordingly (~ should only have to change wdir)
 """
@@ -75,6 +79,7 @@ large_margin_softmax_loss = losses.LargeMarginSoftmaxLoss(num_classes=4,
 multi_margin_loss = MultiMarginLoss(margin=1.0, weight=None)
 
 # Define learning parameters
+# (when using "large_margin_softmax_loss" don't add softmax to output layer, set to None)
 config = {
     "batch_size": 16,
     "epochs": 50,
@@ -82,7 +87,8 @@ config = {
     "optimizer": optim.Adam,
     "scheduler": newbob,
     "factor": 0.5,
-    "criterion": multi_margin_loss.to(device)
+    "criterion": multi_margin_loss.to(device),
+    "out_activation": F.softmax
 }
 
 # Start a W&B run
@@ -93,9 +99,12 @@ wandb.config
 # Split data into training and validation data
 label_files = pd.read_csv(labels_file, header=None, delimiter='\t')
 
-train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
-#train_label_files = label_files[label_files[0].str.contains('s_1')]
-val_label_files = label_files[label_files[0].str.contains('s_5')]
+full_train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
+#full_train_label_files = label_files[label_files[0].str.contains('s_1')]
+val_label_files = full_train_label_files.sample(frac=0.1, random_state=seed)
+train_label_files = full_train_label_files.drop(val_label_files.index)
+
+test_label_files = label_files[label_files[0].str.contains('s_5')]
 
 # Print number of sentences per emotion in each train/val set
 train_num = get_num_sentences(train_label_files)
@@ -134,8 +143,7 @@ for param in speechBert.parameters():
     param.requires_grad = False
 
 # Instantiate model class
-# remember that when using "large_margin_softmax_loss" don't need to add softmax to output layer as the loss funciton does this automatically
-model = Fusion(roberta, speechBert, out_activation=F.softmax).to(device)
+model = Fusion(roberta, speechBert, config["out_activation"]).to(device)
 
 # Instantiate optimizer class
 optimizer = config["optimizer"](model.parameters(), lr=config["learning_rate"])
