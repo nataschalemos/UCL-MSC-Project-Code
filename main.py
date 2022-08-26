@@ -13,7 +13,7 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader
 import torch.optim as optim
-from torch.nn import MultiMarginLoss
+from torch.nn import MultiMarginLoss, L1Loss
 import sys
 import torch.nn.functional as F
 
@@ -24,7 +24,7 @@ from dataset_loader import IemocapDataset, ToTensor
 from train_function import fit
 from validation_function import validate
 from model_structure import newbob, Fusion
-from utils import collate_tokens, collater, get_num_sentences
+from utils import collate_tokens, collater, get_num_sentences, collate_batch
 
 from fairseq.models.roberta import RobertaModel
 
@@ -42,6 +42,12 @@ wdir = sys.argv[1]
 data_dir = sys.argv[2]
 # Define directory with downloaded models
 models_dir = sys.argv[3]
+# Define window for BERT sentence context embeddings (1, 2 or 3)
+context_window = sys.argv[4]
+# Define max sequence length for text tokens
+max_text_tokens = sys.argv[5]
+# Define max sequence length for audio tokens
+max_audio_tokens = sys.argv[6]
 
 # # Define path to directory with files
 # wdir = '/Volumes/TOSHIBA EXT/Code/'
@@ -49,6 +55,12 @@ models_dir = sys.argv[3]
 # data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
 # # Define directory with downloaded models
 # models_dir = wdir + 'Models/bert_kmeans/'
+# # Define window for BERT sentence context embeddings
+# context_window = 1
+# # Define max sequence length for text tokens
+# max_text_tokens=256
+# # Define max sequence length for audio tokens
+# max_audio_tokens=1024
 
 # Define path to "labels_train_t.txt" file
 labels_file = data_dir + 'labels_train_t.txt'
@@ -56,7 +68,7 @@ labels_file = data_dir + 'labels_train_t.txt'
 # Define path to directory with TSB and TAB input embeddings
 root_dir_Roberta = data_dir + 'GPT2Tokens'
 root_dir_SpeechBERT = data_dir + 'vqw2vTokens'
-root_dir_TAB = data_dir + 'FullBertEmb'
+root_dir_TAB = data_dir + 'FullBertEmb' + str(context_window)
 root_dir_text = data_dir + 'Text'
 root_dir_audio = data_dir + 'Audio'
 
@@ -71,24 +83,26 @@ Train model
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f"Computation device: {device}\n")
 
-# Define loss functions
+# Define loss functions and parameters
 large_margin_softmax_loss = losses.LargeMarginSoftmaxLoss(num_classes=4,
                                                           embedding_size=4,
                                                           margin=4,
                                                           scale=1).to(device)
-multi_margin_loss = MultiMarginLoss(margin=1.0, weight=None)
+
+multi_margin_loss = MultiMarginLoss(p=1, margin=0.4, weight=None, size_average=None, reduce=None, reduction='mean')
+
+f1_loss = L1Loss(reduction='sum') # Note: when using this loss need to argmax predictions in train and val functions
 
 # Define learning parameters
-# (when using "large_margin_softmax_loss" don't add softmax to output layer, set to None)
 config = {
     "batch_size": 16,
-    "epochs": 50,
+    "epochs": 30,
     "learning_rate": 5e-5,
     "optimizer": optim.Adam,
     "scheduler": newbob,
     "factor": 0.5,
     "criterion": multi_margin_loss.to(device),
-    "out_activation": F.softmax
+    "context_window": int(context_window)
 }
 
 # Start a W&B run
@@ -118,23 +132,25 @@ print("Val dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".form
 # Load dataset and dataloader
 train_dataset = IemocapDataset(labels_file=train_label_files,
                                dir=data_dir,
+                               context_window=context_window,
                                device=device,
-                               max_text_tokens=512,
-                               max_audio_tokens=2048,
+                               max_text_tokens=int(max_text_tokens),
+                               max_audio_tokens=int(max_audio_tokens),
                                transform=ToTensor())
 
 val_dataset = IemocapDataset(labels_file=val_label_files,
                              dir=data_dir,
+                             context_window=context_window,
                              device=device,
-                             max_text_tokens=512,
-                             max_audio_tokens=2048,
+                             max_text_tokens=int(max_text_tokens),
+                             max_audio_tokens=int(max_audio_tokens),
                              transform=ToTensor())
 
 train_dataloader = DataLoader(train_dataset, batch_size=config["batch_size"],
-                              shuffle=True, num_workers=0, collate_fn=collater)
+                              shuffle=True, num_workers=0, collate_fn=collate_batch)
 
 val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"],
-                            shuffle=False, num_workers=0, collate_fn=collater)
+                            shuffle=False, num_workers=0, collate_fn=collate_batch)
 
 # Load sub-models
 roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
@@ -143,7 +159,7 @@ for param in speechBert.parameters():
     param.requires_grad = False
 
 # Instantiate model class
-model = Fusion(roberta, speechBert, config["out_activation"]).to(device)
+model = Fusion(roberta, speechBert, fuse_dim=128, dropout_rate=0.0).to(device)
 
 # Instantiate optimizer class
 optimizer = config["optimizer"](model.parameters(), lr=config["learning_rate"])

@@ -29,8 +29,15 @@ data_processor.preprocess_data(audio_path=wdir + 'Audio/', emb_path=wdir + 'vqw2
 create_gpt2_tokens()
 
 """
-Create final TAB inputs ([-3,+3]context BERT embeddings)
+Create final TAB inputs ([-context,+context] context BERT embeddings)
 """
 
 # Concatenate context BERT embeddings for TAB input
-concatenate_tab_embs()
+path_to_full_emb1 = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/FullBertEmb1/"
+concatenate_tab_embs(path_to_full_emb1, 1)
+
+path_to_full_emb2 = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/FullBertEmb2/"
+concatenate_tab_embs(path_to_full_emb2, 2)
+
+path_to_full_emb3 = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/FullBertEmb3/"
+concatenate_tab_embs(path_to_full_emb3, 3)

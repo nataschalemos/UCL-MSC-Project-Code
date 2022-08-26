@@ -19,7 +19,8 @@ import pickle
 class IemocapDataset(Dataset):
     """IEMOCAP dataset"""
 
-    def __init__(self, labels_file, dir, device, max_text_tokens=512, max_audio_tokens=2048, transform=None):
+    def __init__(self, labels_file, dir, context_window, device, max_text_tokens=512, max_audio_tokens=2048, transform=None):
+        #TODO: if using their collator function then remove the max sequence truncation here
         """
         Args:
             labels_file (string): Path to the csv file with labels. ('/Volumes/TOSHIBA EXT/Code/IEMOCAP/labels_train_t.txt')
@@ -29,6 +30,7 @@ class IemocapDataset(Dataset):
         """
         self.labels = labels_file
         self.dir = dir
+        self.context_window = context_window
         self.device = device
         self.max_text_tokens = max_text_tokens
         self.max_audio_tokens = max_audio_tokens
@@ -45,7 +47,7 @@ class IemocapDataset(Dataset):
 
         SpeechBERT_tks_file_name = os.path.join(self.dir + 'vqw2vTokens', file_name + '.txt')
         Roberta_tks_file_name = os.path.join(self.dir + 'GPT2Tokens', file_name + '.txt')
-        TAB_emb_file_name = os.path.join(self.dir + 'FullBertEmb', file_name + '.txt')
+        TAB_emb_file_name = os.path.join(self.dir + 'FullBertEmb' + str(self.context_window), file_name + '.txt')
 
         # Load sample embedding vectors
         # Text data (Roberta Tokens)
@@ -54,6 +56,8 @@ class IemocapDataset(Dataset):
             for line in f:
                 words.extend(line.strip().split('\t'))
         tokensized_text = [int(word) for word in words]
+        if len(tokensized_text) > self.max_text_tokens:
+            tokensized_text = tokensized_text[:self.max_text_tokens]
         Roberta_tokens = torch.from_numpy(np.array(tokensized_text))
 
         # Audio data (wav2vec Tokens)
@@ -62,6 +66,8 @@ class IemocapDataset(Dataset):
             for line in f:
                 words.extend(line.strip().split('\t'))
         tokensized_audio = [int(word) for word in words]
+        if len(tokensized_audio) > self.max_audio_tokens:
+            tokensized_audio = tokensized_audio[:self.max_audio_tokens]
         SpeechBERT_tokens = torch.from_numpy(np.array(tokensized_audio))
 
         TAB_embedding = np.loadtxt(TAB_emb_file_name)

@@ -67,6 +67,9 @@ python main.py <path_to_dir> <path_to_data> <path_to_models>
 - <path_to_dir>: path to directory with scripts
 - <path_to_data>: path to directory with data
 - <path_to_models> path to directory containing downloaded models
+- <context_window> context value to create BERT sentence context embeddings (can be 1, 2 or 3)
+- <max_text_tokens> maximum sequence length for text tokens
+- <max_audio_tokens> maximum sequence length for audio tokens
 
 ## References
 [1] https://arxiv.org/pdf/2010.14102.pdf

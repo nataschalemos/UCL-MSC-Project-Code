@@ -51,17 +51,18 @@ class Time_async(nn.Module):
         self.bert_atten = SelfAttentiveLayer(atten_in_dim, attention_unit, num_heads)
 
     def forward(self, x):
-        size = x.size()  # 200,768*7 (note: each item in batch corresponds to a time step i.e. the utterance in centre of 7 utterances)
+        size = x.size()  # 200,768*(context*2+1) (note: each item in batch corresponds to a time step i.e. the utterance in centre of (context*2+1) utterances)
+        n_utterances = int(size[-1] / 768)
         bert = []
-        for i in range(7):
+        for i in range(n_utterances):
             bert.append(F.relu(self.layer_bert(x[:, 768 * i:768 * (i + 1)])).unsqueeze(1))  # 200,768 --> 200,1,64 (note: "shared fully-connected (FC) layer is used to reduce the dimension of each input BERT embedding" --> 1. first reduce dim of each of the 7 sentence embeddings i.e. reduce dims of columns 0-768 (first utterance), then of 769-1537 (second utterance), etc. because the utterances are concatenated along the column dim)
-            bert_all = torch.cat((bert), 1)  # 200,7,64 (note: 7 sentence embeddings at each time step (item in batch) with reduced dim 768 --> 64; this will be the input to the self-attentive layer)
-        out, A = self.bert_atten(bert_all)  # out: 200, 5, 64  A: 200, 5, 7
-        return out.view(out.size(0), -1).contiguous(), A  # out: 200, 320  A: 200, 5, 7
+            bert_all = torch.cat((bert), 1)  # 200,(context*2+1),64 (note: (context*2+1) sentence embeddings at each time step (item in batch) with reduced dim 768 --> 64; this will be the input to the self-attentive layer)
+        out, A = self.bert_atten(bert_all)  # out: 200, 5, 64  A: 200, 5, (context*2+1)
+        return out.view(out.size(0), -1).contiguous(), A  # out: 200, 320  A: 200, 5, (context*2+1)
 
 
 class Fusion(nn.Module):  # (note: this class defines the whole model)
-    def __init__(self, roberta, speechBert, out_activation=None, fuse_dim=128, output_dim=4):  # NOTE: changed output_dim from 5 to 4
+    def __init__(self, roberta, speechBert, fuse_dim=128, dropout_rate=0.0, output_dim=4):  # NOTE: changed output_dim from 5 to 4
         super(Fusion, self).__init__()
 
         self.b1 = roberta.eval()
@@ -69,9 +70,9 @@ class Fusion(nn.Module):  # (note: this class defines the whole model)
         self.b3 = Time_async()
         self.layer_cat = nn.Linear(1024 + 768 + 64 * 5, fuse_dim)
         self.layer_out = nn.Linear(fuse_dim, output_dim, bias=False)
-        self.out_activation = out_activation
+        #self.dropout = nn.Dropout(p=dropout_rate)
 
-        self.layer_cat_out = nn.Linear(1024 + 768 + 64 * 5, output_dim)
+        #self.layer_cat_out = nn.Linear(1024 + 768 + 64 * 5, output_dim)
 
     def forward(self, x, y, z):
         x = self.b1.extract_features(x)[:, 0, :]  # x: 200,1024
@@ -82,11 +83,20 @@ class Fusion(nn.Module):  # (note: this class defines the whole model)
         out = F.relu(self.layer_cat(out))  # 200,128 # TODO: check if dim fuse_dim=128 is appropriate
         out = self.layer_out(out)  # 200,4
 
-        if self.out_activation:
-            out = self.out_activation(out, dim=-1)
-
-            #out = F.relu(self.layer_cat_out(out)) # instead of the other two "out" above
         return out, A3
+
+    # def forward(self, x, y, z):
+    #     x = self [:, 0, :]  # x: 200,1024
+    #     y = self.b2.extract_features(y)[:, 0, :]  # y: 200,768
+    #     z, A3 = self.b3(z)  # z: 200,320
+    #     out = torch.cat((x, y, z), 1)  # 200,2112
+    #
+    #     out = F.relu(self.layer_cat(out))  # 200,128 # TODO: check if dim fuse_dim=128 is appropriate
+    #     #out = self.dropout(out) # add dropout
+    #     out = F.softmax(self.layer_out(out), dim=-1)  # 200,4 ; (Note: if large margin softmax loss dont apply softmax here)
+    #
+    #     #out = self.layer_cat_out(out) # instead intermediate linear layer and output layer
+    #     return out, A3
 
 
 # Newbob scheduler
