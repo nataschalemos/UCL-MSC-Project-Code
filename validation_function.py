@@ -19,7 +19,7 @@ def validate(model, test_dataloader, val_dataset, criterion, device, step):
     # define loss in each iteration
     val_running_loss = 0.0
     # define accuracy in each iteration
-    accuracy = Accuracy(num_classes=4, average='macro')
+    accuracy = Accuracy(num_classes=4, average='macro').to(device)
     val_running_acc = 0.0
 
     counter = 0
@@ -36,15 +36,15 @@ def validate(model, test_dataloader, val_dataset, criterion, device, step):
                                                                   data['TAB_embedding'], data['label']
             target = torch.argmax(torch.squeeze(target), dim=1)
             total += target.size(0)
-            output_all, output_TAB = model(Roberta_tokens, SpeechBERT_tokens, data_TAB)
+            output_all, output_TAB = model(Roberta_tokens.to(device), SpeechBERT_tokens.to(device), data_TAB.to(device))
 
             # compute batch loss
-            loss = criterion(output_all, target)
+            loss = criterion(output_all.to(device), target.to(device))
             val_running_loss += loss.item()
             _, preds = torch.max(output_all.data, 1)
 
             # compute average class-wise accuracy
-            val_running_acc += accuracy(preds, target).item()
+            val_running_acc += accuracy(preds.to(device), target.to(device)).item()
 
         # compute val loss after one epoch
         val_loss = val_running_loss / counter

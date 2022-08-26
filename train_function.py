@@ -23,7 +23,7 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
     running_loss = 0.0
 
     # define accuracy in each iteration
-    accuracy = Accuracy(num_classes=4, average='macro')
+    accuracy = Accuracy(num_classes=4, average='macro').to(device)
     train_running_correct = 0.0
     running_acc = 0.0
 
@@ -42,19 +42,19 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
         target = torch.argmax(torch.squeeze(target), dim=1)
         total += target.size(0)
         optimizer.zero_grad()
-        output_all, output_TAB = model(Roberta_tokens, SpeechBERT_tokens, data_TAB)
+        output_all, output_TAB = model(Roberta_tokens.to(device), SpeechBERT_tokens.to(device), data_TAB.to(device))
 
         # compute batch loss
-        loss = criterion(output_all, target)
+        loss = criterion(output_all.to(device), target.to(device))
         train_running_loss += loss.item()
         running_loss += loss.item()
         _, preds = torch.max(output_all.data, 1)
 
         # add number of correct predictions
-        train_running_correct += accuracy(preds, target).item()
+        train_running_correct += accuracy(preds.to(device), target.to(device)).item()
 
         # compute average class-wise accuracy
-        running_acc += accuracy(preds, target).item()
+        running_acc += accuracy(preds.to(device), target.to(device)).item()
 
         # calculate gradient
         loss.backward()
