@@ -23,6 +23,7 @@ import wandb
 from dataset_loader import IemocapDataset, ToTensor
 from train_function import fit
 from validation_function import validate
+from test_function import test
 from model_structure import newbob, Fusion
 from utils import collate_tokens, collater, get_num_sentences, collate_batch
 
@@ -91,7 +92,7 @@ large_margin_softmax_loss = losses.LargeMarginSoftmaxLoss(num_classes=4,
 
 multi_margin_loss = MultiMarginLoss(p=1, margin=0.4, weight=None, size_average=None, reduce=None, reduction='mean')
 
-f1_loss = L1Loss(reduction='sum') # Note: when using this loss need to argmax predictions in train and val functions
+f1_loss = L1Loss(reduction='sum')  # Note: when using this loss need to argmax predictions in train and val functions
 
 # Define learning parameters
 config = {
@@ -101,7 +102,7 @@ config = {
     "optimizer": optim.Adam,
     "scheduler": newbob,
     "factor": 0.5,
-    "criterion": multi_margin_loss.to(device),
+    "criterion": large_margin_softmax_loss.to(device),
     "context_window": int(context_window)
 }
 
@@ -114,7 +115,7 @@ wandb.config
 label_files = pd.read_csv(labels_file, header=None, delimiter='\t')
 
 full_train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
-#full_train_label_files = label_files[label_files[0].str.contains('s_1')]
+# full_train_label_files = label_files[label_files[0].str.contains('s_1')]
 val_label_files = full_train_label_files.sample(frac=0.1, random_state=seed)
 train_label_files = full_train_label_files.drop(val_label_files.index)
 
@@ -197,7 +198,7 @@ for epoch in range(config["epochs"]):
     print(f'Val Loss: {val_epoch_loss:.4f}, Val Acc: {val_epoch_accuracy:.2f}')
 
     # Update learning rate scheduler
-    scheduler.step(val_epoch_accuracy)
+    #scheduler.step(val_epoch_accuracy)
 
 """
 Save model
@@ -208,3 +209,24 @@ print('Saving model...')
 torch.save(model.state_dict(), data_dir + "outputs/model.pth")
 
 print('TRAINING COMPLETE')
+
+"""
+Test final model
+"""
+
+# Load dataset and dataloader
+test_dataset = IemocapDataset(labels_file=test_label_files,
+                              dir=data_dir,
+                              context_window=context_window,
+                              device=device,
+                              max_text_tokens=int(max_text_tokens),
+                              max_audio_tokens=int(max_audio_tokens),
+                              transform=ToTensor())
+
+test_dataloader = DataLoader(test_dataset, batch_size=config["batch_size"],
+                             shuffle=False, num_workers=0, collate_fn=collate_batch)
+
+test_loss, test_accuracy = test(model, test_dataloader, test_dataset, config["criterion"], device)
+
+print(f'Test Loss: {test_loss:.4f}, Test Acc: {test_accuracy:.2f}')
+wandb.run.summary({"test_accuracy": test_accuracy, "test_loss": test_loss})

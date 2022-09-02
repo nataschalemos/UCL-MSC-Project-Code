@@ -122,4 +122,5 @@ def read_iemocap_mocap():
             #ex_num_v = split_avi(vid_path, emotions, ex_num_v)
 
 
+os.chdir('/Volumes/TOSHIBA EXT/Code/')
 data = read_iemocap_mocap()

@@ -12,7 +12,6 @@ import numpy as np
 import pandas as pd
 import glob
 import array
-import cv2
 # from moviepy.video.io.VideoFileClip import VideoFileClip
 
 
@@ -70,10 +69,12 @@ def split_wav(wav, emotions, ex, sess):
     frames = []
     for ie, e in enumerate(emotions):
         label = e['emotion']
+        gender = e['id'].split('_')
+        gender = gender[-1][0]
 
         if not label in emotions_used:
             continue
-        filename = str(ex) + "_" + "s" + "_" + sess + "_" + label + ".wav"
+        filename = str(ex) + "_" + gender + "_" + "s" + "_" + sess + "_" + label + ".wav"
 
         start = e['start']
         end = e['end']
@@ -103,10 +104,12 @@ def split_text(txt, emotions, ex, sess):
 
     for ie, e in enumerate(emotions):
         label = e['emotion']
+        gender = e['id'].split('_')
+        gender = gender[-1][0]
 
         if not label in emotions_used:
             continue
-        filename = str(ex) + "_" + "s" + "_" + sess + "_" + label + ".txt"
+        filename = str(ex) + "_" + gender + "_" + "s" + "_" + sess + "_" + label + ".txt"
 
         real_text = txt[e['id']]
 

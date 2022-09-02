@@ -29,7 +29,7 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
 
     counter = 0
     total = 0
-    prog_bar = tqdm(enumerate(train_dataloader), total=int(len(train_dataset) / train_dataloader.batch_size))
+    prog_bar = tqdm(enumerate(train_dataloader), total=int(len(train_dataset) / train_dataloader.batch_size), position=0, leave=True)
 
     # iterate through data batches
     for i, data in prog_bar:
@@ -63,7 +63,7 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
 
         # Log metrics inside your training loop to visualize model performance
         # log every 20 mini-batches
-        if i % batch_checkpoint == batch_checkpoint - 1:  # log every 10 mini-batches
+        if i % batch_checkpoint == batch_checkpoint - 1:  # log every 20 mini-batches
             step += 1
             wandb.log({"train": {"loss": running_loss / batch_checkpoint,
                                  "accuracy": running_acc / batch_checkpoint, "custom_step_train": step}})
