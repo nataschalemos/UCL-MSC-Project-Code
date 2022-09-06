@@ -64,7 +64,7 @@ class EmotionDataPreprocessing():
         self.model.eval()
 
         # Roberta wav2vec
-        self.roberta = RobertaModel.from_pretrained('/Volumes/TOSHIBA EXT/Code/Models/bert_kmeans',checkpoint_file='bert_kmeans.pt')
+        self.roberta = RobertaModel.from_pretrained('/Volumes/TOSHIBA EXT/Code/Models/bert_kmeans', checkpoint_file='bert_kmeans.pt')
 
         self.roberta.eval()
 
@@ -106,7 +106,9 @@ class EmotionDataPreprocessing():
                     with open(output_file, 'w') as f:
                         for item in tokens:
                             f.write(str(item) + '\t')
+
                     current_num += 1
+
                     if current_num > num_items:
                         break
 

@@ -51,23 +51,39 @@ class IemocapDataset(Dataset):
 
         # Load sample embedding vectors
         # Text data (Roberta Tokens)
+
+        tokensized_text = []
+        limit_marker = False
         with open(Roberta_tks_file_name, 'r') as f:
-            words = []
             for line in f:
-                words.extend(line.strip().split('\t'))
-        tokensized_text = [int(word) for word in words]
-        if len(tokensized_text) > self.max_text_tokens:
-            tokensized_text = tokensized_text[:self.max_text_tokens]
+                for word in line.strip().split('\t'):
+                    tokensized_text.append(int(word))
+
+                    if len(tokensized_text) == self.max_text_tokens:
+                        limit_marker = True
+                        break
+
+                if limit_marker:
+                    break
+
         Roberta_tokens = torch.from_numpy(np.array(tokensized_text))
 
         # Audio data (wav2vec Tokens)
+
+        tokensized_audio = []
+        limit_marker = False
         with open(SpeechBERT_tks_file_name, 'r') as f:
-            words = []
             for line in f:
-                words.extend(line.strip().split('\t'))
-        tokensized_audio = [int(word) for word in words]
-        if len(tokensized_audio) > self.max_audio_tokens:
-            tokensized_audio = tokensized_audio[:self.max_audio_tokens]
+                for word in line.strip().split('\t'):
+                    tokensized_audio.append(int(word))
+
+                    if len(tokensized_audio) == self.max_audio_tokens:
+                        limit_marker = True
+                        break
+
+                if limit_marker:
+                    break
+
         SpeechBERT_tokens = torch.from_numpy(np.array(tokensized_audio))
 
         TAB_embedding = np.loadtxt(TAB_emb_file_name)
