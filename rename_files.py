@@ -28,13 +28,13 @@ def rename_f(data_dir, emb_dir):
             os.rename(data_dir+emb_dir+f, data_dir+emb_dir+label_i)
             i += 1
 
-# # Define path to directory with files
-# wdir = sys.argv[1]
-# # Define directory with data
-# data_dir = sys.argv[2]
+# Define path to directory with files
+wdir = sys.argv[1]
+# Define directory with data
+data_dir = sys.argv[2]
 
-wdir = '/Volumes/TOSHIBA EXT/Code/'
-data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
+# wdir = '/Volumes/TOSHIBA EXT/Code/'
+# data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
 os.chdir(wdir)
 
 # Rename files in directories
