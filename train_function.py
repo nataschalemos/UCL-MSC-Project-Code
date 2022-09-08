@@ -23,6 +23,7 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
     running_loss = 0.0
 
     # define accuracy in each iteration
+    # TODO: define weighted accuracy as well
     accuracy = Accuracy(num_classes=4, average='macro').to(device)
     train_running_correct = 0.0
     running_acc = 0.0

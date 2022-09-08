@@ -5,6 +5,7 @@
 import pandas as pd
 import sys
 import os
+import re
 
 def rename_f(data_dir, emb_dir):
 
@@ -12,6 +13,7 @@ def rename_f(data_dir, emb_dir):
     label_files = pd.read_csv(labels_file, header=None, delimiter='\t')
 
     files = os.listdir(data_dir+emb_dir)
+    files.sort(key=lambda f: int(re.sub('\D', '', f)))
 
     i = 0
 
@@ -26,13 +28,13 @@ def rename_f(data_dir, emb_dir):
             os.rename(data_dir+emb_dir+f, data_dir+emb_dir+label_i)
             i += 1
 
-# Define path to directory with files
-wdir = sys.argv[1]
-# Define directory with data
-data_dir = sys.argv[2]
+# # Define path to directory with files
+# wdir = sys.argv[1]
+# # Define directory with data
+# data_dir = sys.argv[2]
 
-# wdir = '/Volumes/TOSHIBA EXT/Code/'
-# data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
+wdir = '/Volumes/TOSHIBA EXT/Code/'
+data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
 os.chdir(wdir)
 
 # Rename files in directories

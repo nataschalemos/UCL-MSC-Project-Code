@@ -19,6 +19,7 @@ def validate(model, test_dataloader, val_dataset, criterion, device, step):
     # define loss in each iteration
     val_running_loss = 0.0
     # define accuracy in each iteration
+    # TODO: define weighted accuracy as well
     accuracy = Accuracy(num_classes=4, average='macro').to(device)
     val_running_acc = 0.0
 

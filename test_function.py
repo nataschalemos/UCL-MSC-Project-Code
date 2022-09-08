@@ -17,6 +17,7 @@ def test(model, test_dataloader, test_dataset, criterion, device):
     # define loss in each iteration
     test_running_loss = 0.0
     # define accuracy in each iteration
+    # TODO: define weighted accuracy as well
     accuracy = Accuracy(num_classes=4, average='macro').to(device)
     test_running_acc = 0.0
 
