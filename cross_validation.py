@@ -56,6 +56,11 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
         train_loss, train_u_accuracy, train_w_accuracy = [], [], []
         val_loss, val_u_accuracy, val_w_accuracy = [], [], []
 
+        # Early stopping parameters
+        last_loss = 1000
+        patience = 6
+        trigger_times = 0
+
         # initialize step for WandB plots
         step_train = 0
         step_val = 0
@@ -66,12 +71,14 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
             print(f'\nEpoch {epoch + 1} of {config["epochs"]}')
 
             # Fit model
+            model.train()
             train_epoch_loss, train_epoch_u_accuracy, train_epoch_w_accuracy, curr_train_step = fit(model, train_dataloader, train_dataset,
                                                                           optimizer,
                                                                           config["criterion"], device, step_train)
             step_train += curr_train_step
 
             # Validate model
+            model.eval()
             val_epoch_loss, val_epoch_u_accuracy, val_epoch_w_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"], device, step_val)
             step_val += 1
 
@@ -84,6 +91,17 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
 
             print(f"Train Loss: {train_epoch_loss:.4f}, Train UA: {train_epoch_u_accuracy:.2f}, Train WA: {train_epoch_w_accuracy:.2f}")
             print(f'Val Loss: {val_epoch_loss:.4f}, Val UA: {val_epoch_u_accuracy:.2f}, Val WA: {val_epoch_w_accuracy:.2f}')
+
+            # Early stopping
+            if val_epoch_loss > last_loss:
+                trigger_times += 1
+                if trigger_times >= patience:
+                    print('Early stopping!')
+                    break
+            else:
+                trigger_times = 0
+
+            last_loss = val_epoch_loss
 
             # Update learning rate scheduler
             #scheduler.step(val_epoch_accuracy)
@@ -99,10 +117,13 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
         # print('TRAINING COMPLETE')
 
         # Test model on test data
+        model.eval()
         test_loss, test_unweighted_accuracy, test_weighted_accuracy = test(model, test_dataloader, test_dataset, config["criterion"], device)
 
         # log metrics inside your val loop to visualize model performance
-        wandb.run.summary({"test_unweighted_accuracy": test_unweighted_accuracy, "test_weighted_accuracy": test_weighted_accuracy, "test_loss": test_loss})
+        wandb.run.summary["test_unweighted_accuracy_" + str(run)] = test_unweighted_accuracy
+        wandb.run.summary["test_weighted_accuracy_" + str(run)] = test_weighted_accuracy
+        wandb.run.summary["test_loss_" + str(run)] = test_loss
 
         print(f"Test Loss: {test_loss:.4f}, Test UA: {test_unweighted_accuracy:.2f}, Test WA: {test_weighted_accuracy:.2f}")
 
@@ -116,7 +137,7 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
         test_UA_runs[run] = test_unweighted_accuracy
         test_WA_runs[run] = test_weighted_accuracy
 
-    return train_UA_runs,train_WA_runs,val_UA_runs,val_WA_runs,test_UA_runs,test_WA_runs
+    return train_UA_runs, train_WA_runs, val_UA_runs, val_WA_runs, test_UA_runs, test_WA_runs
 
 
 

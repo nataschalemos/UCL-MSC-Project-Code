@@ -108,7 +108,7 @@ config = {
 }
 
 # Start a W&B run
-wandb.init(project="run-new-model-cv-1", group="exp_1", entity="natascha-msc-project", config=config)
+wandb.init(project="run-new-model-cv-1", group="exp_2", entity="natascha-msc-project", config=config)
 # Save model inputs and hyperparameters
 wandb.config
 
@@ -119,8 +119,8 @@ sessions = ['s_1', 's_2', 's_3', 's_4', 's_5']
 # Load sub-models
 roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
 speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
-for param in speechBert.parameters():
-    param.requires_grad = False
+# for param in speechBert.parameters():
+#     param.requires_grad = False
 
 # Perform k-fold cross-validation
 train_UA_runs,train_WA_runs,val_UA_runs,val_WA_runs,test_UA_runs,test_WA_runs = KfoldCv(5, seed, config, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, roberta, speechBert)

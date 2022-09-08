@@ -37,31 +37,31 @@ torch.manual_seed(seed)
 Variables to define - change the variables below accordingly (~ should only have to change wdir)
 """
 
-# Define path to directory with files
-wdir = sys.argv[1]
-# Define directory with data
-data_dir = sys.argv[2]
-# Define directory with downloaded models
-models_dir = sys.argv[3]
-# Define window for BERT sentence context embeddings (1, 2 or 3)
-context_window = sys.argv[4]
-# Define max sequence length for text tokens
-max_text_tokens = sys.argv[5]
-# Define max sequence length for audio tokens
-max_audio_tokens = sys.argv[6]
-
 # # Define path to directory with files
-# wdir = '/Volumes/TOSHIBA EXT/Code/'
+# wdir = sys.argv[1]
 # # Define directory with data
-# data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
+# data_dir = sys.argv[2]
 # # Define directory with downloaded models
-# models_dir = wdir + 'Models/bert_kmeans/'
-# # Define window for BERT sentence context embeddings
-# context_window = 1
+# models_dir = sys.argv[3]
+# # Define window for BERT sentence context embeddings (1, 2 or 3)
+# context_window = sys.argv[4]
 # # Define max sequence length for text tokens
-# max_text_tokens=256
+# max_text_tokens = sys.argv[5]
 # # Define max sequence length for audio tokens
-# max_audio_tokens=1024
+# max_audio_tokens = sys.argv[6]
+
+# Define path to directory with files
+wdir = '/Volumes/TOSHIBA EXT/Code/'
+# Define directory with data
+data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
+# Define directory with downloaded models
+models_dir = wdir + 'Models/bert_kmeans/'
+# Define window for BERT sentence context embeddings
+context_window = 1
+# Define max sequence length for text tokens
+max_text_tokens=256
+# Define max sequence length for audio tokens
+max_audio_tokens=1024
 
 # Define path to "labels_train_t.txt" file
 labels_file = data_dir + 'labels_train_t.txt'
@@ -156,8 +156,8 @@ val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"],
 # Load sub-models
 roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
 speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
-for param in speechBert.parameters():
-    param.requires_grad = False
+# for param in speechBert.parameters():
+#     param.requires_grad = False
 
 # Instantiate model class
 model = Fusion(roberta, speechBert, fuse_dim=128, dropout_rate=0.0).to(device)
@@ -170,6 +170,11 @@ scheduler = config["scheduler"](optimizer, factor=config["factor"], model=model)
 # Lists to store per-epoch loss and accuracy values
 train_loss, train_u_accuracy, train_w_accuracy = [], [], []
 val_loss, val_u_accuracy, val_w_accuracy = [], [], []
+
+# Early stopping parameters
+last_loss = 1000
+patience = 4
+trigger_times = 0
 
 # initialize step for WandB plots
 step_train = 0
@@ -198,6 +203,17 @@ for epoch in range(config["epochs"]):
 
     print(f"Train Loss: {train_epoch_loss:.4f}, Train UA: {train_epoch_u_accuracy:.2f}, Train WA: {train_epoch_w_accuracy:.2f}")
     print(f'Val Loss: {val_epoch_loss:.4f}, Val UA: {val_epoch_u_accuracy:.2f}, Val WA: {val_epoch_w_accuracy:.2f}')
+
+    # Early stopping
+    if val_epoch_loss > last_loss:
+        trigger_times += 1
+        if trigger_times >= patience:
+            print('Early stopping!')
+            break
+    else:
+        trigger_times = 0
+
+    last_loss = val_epoch_loss
 
     # Update learning rate scheduler
     #scheduler.step(val_epoch_accuracy)

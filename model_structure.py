@@ -65,8 +65,10 @@ class Fusion(nn.Module):  # (note: this class defines the whole model)
     def __init__(self, roberta, speechBert, fuse_dim=128, dropout_rate=0.0, output_dim=4):  # NOTE: changed output_dim from 5 to 4
         super(Fusion, self).__init__()
 
-        self.b1 = roberta.eval()
-        self.b2 = speechBert.eval()
+        #self.b1 = roberta.eval()
+        #self.b2 = speechBert.eval()
+        self.b1 = roberta
+        self.b2 = speechBert
         self.b3 = Time_async()
         self.layer_cat = nn.Linear(1024 + 768 + 64 * 5, fuse_dim)
         self.layer_out = nn.Linear(fuse_dim, output_dim, bias=False)
