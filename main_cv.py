@@ -123,14 +123,22 @@ for param in speechBert.parameters():
     param.requires_grad = False
 
 # Perform k-fold cross-validation
-train_accuracy_runs, val_accuracy_runs, test_accuracy_runs = KfoldCv(5, seed, config, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, roberta, speechBert)
+train_UA_runs,train_WA_runs,val_UA_runs,val_WA_runs,test_UA_runs,test_WA_runs = KfoldCv(5, seed, config, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, roberta, speechBert)
 
 # Calculate averages of metrics
-train_accuracy_avg = np.mean(train_accuracy_runs)
-val_accuracy_avg = np.mean(val_accuracy_runs)
-test_accuracy_avg = np.mean(test_accuracy_runs)
+train_UA_avg = np.mean(train_UA_runs)
+train_WA_avg = np.mean(train_WA_runs)
+
+val_UA_avg = np.mean(val_UA_runs)
+val_WA_avg = np.mean(val_WA_runs)
+
+test_UA_avg = np.mean(test_UA_runs)
+test_WA_avg = np.mean(test_WA_runs)
 
 # Report results
-print("\nAverage training accuracy: {}".format(train_accuracy_avg))
-print("Average validation accuracy: {}".format(val_accuracy_avg))
-print("Average test accuracy: {}".format(test_accuracy_avg))
+print("\nTraining: average UA: {}".format(train_UA_avg))
+print("Training: average WA: {}".format(train_WA_avg))
+print("\nValidation: average UA: {}".format(val_UA_avg))
+print("Validation: average WA: {}".format(val_WA_avg))
+print("\nTest: average UA: {}".format(test_UA_avg))
+print("Test: average WA: {}".format(test_WA_avg))

@@ -23,10 +23,12 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
     running_loss = 0.0
 
     # define accuracy in each iteration
-    # TODO: define weighted accuracy as well
-    accuracy = Accuracy(num_classes=4, average='macro').to(device)
-    train_running_correct = 0.0
-    running_acc = 0.0
+    unweighted_accuracy = Accuracy(num_classes=4, average='macro').to(device)
+    weighted_accuracy = Accuracy(num_classes=4, average='micro').to(device)
+    train_running_u_acc = 0.0
+    train_running_w_acc = 0.0
+    running_u_acc = 0.0
+    running_w_acc = 0.0
 
     counter = 0
     total = 0
@@ -52,10 +54,13 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
         _, preds = torch.max(output_all.data, 1)
 
         # add number of correct predictions
-        train_running_correct += accuracy(preds.to(device), target.to(device)).item()
+        train_running_u_acc += unweighted_accuracy(preds.to(device), target.to(device)).item()
+        train_running_w_acc += weighted_accuracy(preds.to(device), target.to(device)).item()
 
         # compute average class-wise accuracy
-        running_acc += accuracy(preds.to(device), target.to(device)).item()
+        running_u_acc += unweighted_accuracy(preds.to(device), target.to(device)).item()
+        running_w_acc += weighted_accuracy(preds.to(device), target.to(device)).item()
+
 
         # calculate gradient
         loss.backward()
@@ -67,13 +72,15 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
         if i % batch_checkpoint == batch_checkpoint - 1:  # log every 20 mini-batches
             step += 1
             wandb.log({"train": {"loss": running_loss / batch_checkpoint,
-                                 "accuracy": running_acc / batch_checkpoint, "custom_step_train": step}})
+                                 "unweighted_accuracy": running_u_acc / batch_checkpoint, "weighted_accuracy": running_w_acc / batch_checkpoint, "custom_step_train": step}})
             running_loss = 0.0
-            running_acc = 0.0
+            running_u_acc = 0.0
+            running_w_acc = 0.0
 
     # compute train loss after one epoch
     train_loss = train_running_loss / counter
     # compute train accuracy after one epoch
-    train_accuracy = train_running_correct / counter
+    train_unweighted_accuracy = train_running_u_acc / counter
+    train_weighted_accuracy = train_running_w_acc / counter
 
-    return train_loss, train_accuracy, step
+    return train_loss, train_unweighted_accuracy, train_weighted_accuracy, step

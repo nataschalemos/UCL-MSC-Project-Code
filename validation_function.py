@@ -19,9 +19,10 @@ def validate(model, test_dataloader, val_dataset, criterion, device, step):
     # define loss in each iteration
     val_running_loss = 0.0
     # define accuracy in each iteration
-    # TODO: define weighted accuracy as well
-    accuracy = Accuracy(num_classes=4, average='macro').to(device)
-    val_running_acc = 0.0
+    unweighted_accuracy = Accuracy(num_classes=4, average='macro').to(device)
+    weighted_accuracy = Accuracy(num_classes=4, average='micro').to(device)
+    val_running_u_acc = 0.0
+    val_running_w_acc = 0.0
 
     counter = 0
     total = 0
@@ -45,14 +46,16 @@ def validate(model, test_dataloader, val_dataset, criterion, device, step):
             _, preds = torch.max(output_all.data, 1)
 
             # compute average class-wise accuracy
-            val_running_acc += accuracy(preds.to(device), target.to(device)).item()
+            val_running_u_acc += unweighted_accuracy(preds.to(device), target.to(device)).item()
+            val_running_w_acc += weighted_accuracy(preds.to(device), target.to(device)).item()
 
         # compute val loss after one epoch
         val_loss = val_running_loss / counter
         # compute val accuracy after one epoch
-        val_accuracy = val_running_acc / counter
+        val_unweighted_accuracy = val_running_u_acc / counter
+        val_weighted_accuracy = val_running_w_acc / counter
 
         # log metrics inside your val loop to visualize model performance
-        wandb.log({"val": {"loss": val_loss, "accuracy": val_accuracy, "custom_step_val": step}})
+        wandb.log({"val": {"loss": val_loss, "unweighted_accuracy": val_unweighted_accuracy, "weighted_accuracy": val_weighted_accuracy, "custom_step_val": step}})
 
-        return val_loss, val_accuracy
+        return val_loss, val_unweighted_accuracy, val_weighted_accuracy

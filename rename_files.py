@@ -32,14 +32,19 @@ def rename_f(data_dir, emb_dir):
 wdir = sys.argv[1]
 # Define directory with data
 data_dir = sys.argv[2]
+# Define directory with embeddings (vqw2vTokens, GPT2Tokens, FullBertEmb1, FullBertEmb2 or FullBertEmb3)
+emb_dir = sys.argv[3]
+
 
 # wdir = '/Volumes/TOSHIBA EXT/Code/'
 # data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
 os.chdir(wdir)
 
 # Rename files in directories
-rename_f(data_dir, 'vqw2vTokens/')
-rename_f(data_dir, 'GPT2Tokens/')
-rename_f(data_dir, 'FullBertEmb1/')
-rename_f(data_dir, 'FullBertEmb2/')
-rename_f(data_dir, 'FullBertEmb3/')
+rename_f(data_dir, emb_dir + '/')
+
+# rename_f(data_dir, 'vqw2vTokens/')
+# rename_f(data_dir, 'GPT2Tokens/')
+# rename_f(data_dir, 'FullBertEmb1/')
+# rename_f(data_dir, 'FullBertEmb2/')
+# rename_f(data_dir, 'FullBertEmb3/')

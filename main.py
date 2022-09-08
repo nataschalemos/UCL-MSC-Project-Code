@@ -102,7 +102,7 @@ config = {
     "optimizer": optim.Adam,
     "scheduler": newbob,
     "factor": 0.5,
-    "criterion": large_margin_softmax_loss.to(device),
+    "criterion": multi_margin_loss.to(device),
     "context_window": int(context_window)
 }
 
@@ -168,8 +168,8 @@ optimizer = config["optimizer"](model.parameters(), lr=config["learning_rate"])
 scheduler = config["scheduler"](optimizer, factor=config["factor"], model=model)
 
 # Lists to store per-epoch loss and accuracy values
-train_loss, train_accuracy = [], []
-val_loss, val_accuracy = [], []
+train_loss, train_u_accuracy, train_w_accuracy = [], [], []
+val_loss, val_u_accuracy, val_w_accuracy = [], [], []
 
 # initialize step for WandB plots
 step_train = 0
@@ -180,22 +180,24 @@ for epoch in range(config["epochs"]):
     print(f'Epoch {epoch + 1} of {config["epochs"]}')
 
     # Fit model
-    train_epoch_loss, train_epoch_accuracy, curr_train_step = fit(model, train_dataloader, train_dataset, optimizer,
+    train_epoch_loss, train_epoch_u_accuracy, train_epoch_w_accuracy, curr_train_step = fit(model, train_dataloader, train_dataset, optimizer,
                                                                   config["criterion"], device, step_train)
     step_train += curr_train_step
 
     # Validate model
-    val_epoch_loss, val_epoch_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"], device,
+    val_epoch_loss, val_epoch_u_accuracy, val_epoch_w_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"], device,
                                                   step_val)
     step_val += 1
 
     train_loss.append(train_epoch_loss)
-    train_accuracy.append(train_epoch_accuracy)
+    train_u_accuracy.append(train_epoch_u_accuracy)
+    train_w_accuracy.append(train_epoch_w_accuracy)
     val_loss.append(val_epoch_loss)
-    val_accuracy.append(val_epoch_accuracy)
+    val_u_accuracy.append(val_epoch_u_accuracy)
+    val_w_accuracy.append(val_epoch_w_accuracy)
 
-    print(f"Train Loss: {train_epoch_loss:.4f}, Train Acc: {train_epoch_accuracy:.2f}")
-    print(f'Val Loss: {val_epoch_loss:.4f}, Val Acc: {val_epoch_accuracy:.2f}')
+    print(f"Train Loss: {train_epoch_loss:.4f}, Train UA: {train_epoch_u_accuracy:.2f}, Train WA: {train_epoch_w_accuracy:.2f}")
+    print(f'Val Loss: {val_epoch_loss:.4f}, Val UA: {val_epoch_u_accuracy:.2f}, Val WA: {val_epoch_w_accuracy:.2f}')
 
     # Update learning rate scheduler
     #scheduler.step(val_epoch_accuracy)
@@ -226,7 +228,7 @@ test_dataset = IemocapDataset(labels_file=test_label_files,
 test_dataloader = DataLoader(test_dataset, batch_size=config["batch_size"],
                              shuffle=False, num_workers=0, collate_fn=collate_batch)
 
-test_loss, test_accuracy = test(model, test_dataloader, test_dataset, config["criterion"], device)
+test_loss, test_unweighted_accuracy, test_weighted_accuracy = test(model, test_dataloader, test_dataset, config["criterion"], device)
 
-print(f'Test Loss: {test_loss:.4f}, Test Acc: {test_accuracy:.2f}')
-wandb.run.summary({"test_accuracy": test_accuracy, "test_loss": test_loss})
+print(f"Test Loss: {test_loss:.4f}, Test UA: {test_unweighted_accuracy:.2f}, Test WA: {test_weighted_accuracy:.2f}")
+wandb.run.summary({"test_unweighted_accuracy": test_unweighted_accuracy, "test_weighted_accuracy": test_weighted_accuracy, "test_loss": test_loss})

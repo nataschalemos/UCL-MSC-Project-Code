@@ -18,9 +18,12 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
             speechBert):
 
     # Store results for each run
-    train_accuracy_runs = np.zeros(fold)
-    val_accuracy_runs = np.zeros(fold)
-    test_accuracy_runs = np.zeros(fold)
+    train_UA_runs = np.zeros(fold)
+    train_WA_runs = np.zeros(fold)
+    val_UA_runs = np.zeros(fold)
+    val_WA_runs = np.zeros(fold)
+    test_UA_runs = np.zeros(fold)
+    test_WA_runs = np.zeros(fold)
 
     # Define k-fold cross validation test harness
     kfold = KFold(n_splits=fold, shuffle=True, random_state=seed)
@@ -50,8 +53,8 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
         scheduler = config["scheduler"](optimizer, factor=config["factor"], model=model)
 
         # Lists to store per-epoch loss and accuracy values
-        train_loss, train_accuracy = [], []
-        val_loss, val_accuracy = [], []
+        train_loss, train_u_accuracy, train_w_accuracy = [], [], []
+        val_loss, val_u_accuracy, val_w_accuracy = [], [], []
 
         # initialize step for WandB plots
         step_train = 0
@@ -63,24 +66,24 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
             print(f'\nEpoch {epoch + 1} of {config["epochs"]}')
 
             # Fit model
-            train_epoch_loss, train_epoch_accuracy, curr_train_step = fit(model, train_dataloader, train_dataset,
+            train_epoch_loss, train_epoch_u_accuracy, train_epoch_w_accuracy, curr_train_step = fit(model, train_dataloader, train_dataset,
                                                                           optimizer,
                                                                           config["criterion"], device, step_train)
             step_train += curr_train_step
 
             # Validate model
-            val_epoch_loss, val_epoch_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"],
-                                                          device,
-                                                          step_val)
+            val_epoch_loss, val_epoch_u_accuracy, val_epoch_w_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"], device, step_val)
             step_val += 1
 
             train_loss.append(train_epoch_loss)
-            train_accuracy.append(train_epoch_accuracy)
+            train_u_accuracy.append(train_epoch_u_accuracy)
+            train_w_accuracy.append(train_epoch_w_accuracy)
             val_loss.append(val_epoch_loss)
-            val_accuracy.append(val_epoch_accuracy)
+            val_u_accuracy.append(val_epoch_u_accuracy)
+            val_w_accuracy.append(val_epoch_w_accuracy)
 
-            print(f"Train Loss: {train_epoch_loss:.4f}, Train Acc: {train_epoch_accuracy:.2f}")
-            print(f'Val Loss: {val_epoch_loss:.4f}, Val Acc: {val_epoch_accuracy:.2f}')
+            print(f"Train Loss: {train_epoch_loss:.4f}, Train UA: {train_epoch_u_accuracy:.2f}, Train WA: {train_epoch_w_accuracy:.2f}")
+            print(f'Val Loss: {val_epoch_loss:.4f}, Val UA: {val_epoch_u_accuracy:.2f}, Val WA: {val_epoch_w_accuracy:.2f}')
 
             # Update learning rate scheduler
             #scheduler.step(val_epoch_accuracy)
@@ -96,20 +99,24 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
         # print('TRAINING COMPLETE')
 
         # Test model on test data
-        test_loss, test_accuracy = test(model, test_dataloader, test_dataset, config["criterion"],
-                                                      device)
+        test_loss, test_unweighted_accuracy, test_weighted_accuracy = test(model, test_dataloader, test_dataset, config["criterion"], device)
 
         # log metrics inside your val loop to visualize model performance
-        wandb.run.summary({"test_accuracy": test_accuracy, "test_loss": test_loss})
+        wandb.run.summary({"test_unweighted_accuracy": test_unweighted_accuracy, "test_weighted_accuracy": test_weighted_accuracy, "test_loss": test_loss})
 
-        print(f"Test Loss: {test_loss:.4f}, Test Acc: {test_accuracy:.2f}")
+        print(f"Test Loss: {test_loss:.4f}, Test UA: {test_unweighted_accuracy:.2f}, Test WA: {test_weighted_accuracy:.2f}")
 
         # Save results
-        train_accuracy_runs[run] = train_epoch_accuracy
-        val_accuracy_runs[run] = val_epoch_accuracy
-        test_accuracy_runs[run] = test_accuracy
+        train_UA_runs[run] = train_epoch_u_accuracy
+        train_WA_runs[run] = train_epoch_w_accuracy
 
-    return train_accuracy_runs, val_accuracy_runs, test_accuracy_runs
+        val_UA_runs[run] = val_epoch_u_accuracy
+        val_WA_runs[run] = val_epoch_w_accuracy
+
+        test_UA_runs[run] = test_unweighted_accuracy
+        test_WA_runs[run] = test_weighted_accuracy
+
+    return train_UA_runs,train_WA_runs,val_UA_runs,val_WA_runs,test_UA_runs,test_WA_runs
 
 
 
