@@ -19,8 +19,13 @@ def test(model, test_dataloader, test_dataset, criterion, device):
     # define accuracy in each iteration
     unweighted_accuracy = Accuracy(num_classes=4, average='macro').to(device)
     weighted_accuracy = Accuracy(num_classes=4, average='micro').to(device)
+
     test_running_u_acc = 0.0
     test_running_w_acc = 0.0
+
+    # define accuracy for each class separately
+    class_accuracy = Accuracy(num_classes=4, average=None).to(device)
+    test_running_class_acc = torch.zeros(4).to(device)
 
     counter = 0
     total = 0
@@ -46,11 +51,14 @@ def test(model, test_dataloader, test_dataset, criterion, device):
             test_running_u_acc += unweighted_accuracy(preds.to(device), target.to(device)).item()
             # compute weighted accuracy
             test_running_w_acc += weighted_accuracy(preds.to(device), target.to(device)).item()
+            # compute class-wise accuracy
+            test_running_class_acc += class_accuracy(preds.to(device), target.to(device))
 
         # compute val loss after one epoch
         test_loss = test_running_loss / counter
         # compute val accuracy after one epoch
         test_unweighted_accuracy = test_running_u_acc / counter
         test_weighted_accuracy = test_running_w_acc / counter
+        test_class_accuracy = (test_running_class_acc / counter).numpy()
 
-        return test_loss, test_unweighted_accuracy, test_weighted_accuracy
+        return test_loss, test_unweighted_accuracy, test_weighted_accuracy, test_class_accuracy

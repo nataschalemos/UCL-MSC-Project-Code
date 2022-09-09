@@ -1,0 +1,22 @@
+{
+    "os": "Darwin-19.4.0-x86_64-i386-64bit",
+    "python": "3.7.0",
+    "heartbeatAt": "2022-09-09T11:03:28.164299",
+    "startedAt": "2022-09-09T11:03:26.273088",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/Volumes/TOSHIBA EXT/Code/MyModel/test_file.py",
+    "codePath": "test_file.py",
+    "git": {
+        "remote": "https://github.com/nataschalemos/UCL-MSC-Project-MyModel.git",
+        "commit": "4f342bb0802bdded5ab9c0f74d40602b55766e5c"
+    },
+    "email": "73705230+nataschalemos@users.noreply.github.com",
+    "root": "/Volumes/TOSHIBA EXT/Code/MyModel",
+    "host": "Nataschas-MacBook-Pro.local",
+    "username": "nataschah",
+    "executable": "/Users/nataschah/opt/anaconda3/envs/env2/bin/python"
+}

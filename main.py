@@ -97,7 +97,7 @@ f1_loss = L1Loss(reduction='sum')  # Note: when using this loss need to argmax p
 # Define learning parameters
 config = {
     "batch_size": 16,
-    "epochs": 30,
+    "epochs": 100,
     "learning_rate": 5e-5,
     "optimizer": optim.Adam,
     "scheduler": newbob,

@@ -1,0 +1,197 @@
+2022-09-09 12:16:20,039 INFO    StreamThr :9887 [internal.py:wandb_internal():93] W&B internal server running at pid: 9887, started at: 2022-09-09 12:16:20.039147
+2022-09-09 12:16:20,041 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: status
+2022-09-09 12:16:20,042 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: status
+2022-09-09 12:16:20,044 DEBUG   SenderThread:9887 [sender.py:send():302] send: header
+2022-09-09 12:16:20,044 INFO    WriterThread:9887 [datastore.py:open_for_write():75] open: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/run-32h7zlrm.wandb
+2022-09-09 12:16:20,044 DEBUG   SenderThread:9887 [sender.py:send():302] send: run
+2022-09-09 12:16:20,588 INFO    SenderThread:9887 [dir_watcher.py:__init__():216] watching files in: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files
+2022-09-09 12:16:20,588 INFO    SenderThread:9887 [sender.py:_start_run_threads():916] run started: 32h7zlrm with start time 1662722179.070019
+2022-09-09 12:16:20,589 DEBUG   SenderThread:9887 [sender.py:send():302] send: summary
+2022-09-09 12:16:20,589 INFO    SenderThread:9887 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:16:20,592 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: check_version
+2022-09-09 12:16:20,593 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: check_version
+2022-09-09 12:16:20,682 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: run_start
+2022-09-09 12:16:20,684 DEBUG   HandlerThread:9887 [meta.py:__init__():35] meta init
+2022-09-09 12:16:20,685 DEBUG   HandlerThread:9887 [meta.py:__init__():50] meta init done
+2022-09-09 12:16:20,685 DEBUG   HandlerThread:9887 [meta.py:probe():216] probe
+2022-09-09 12:16:20,686 DEBUG   HandlerThread:9887 [meta.py:_setup_git():206] setup git
+2022-09-09 12:16:20,709 DEBUG   HandlerThread:9887 [meta.py:_setup_git():213] setup git done
+2022-09-09 12:16:20,709 DEBUG   HandlerThread:9887 [meta.py:_save_pip():54] save pip
+2022-09-09 12:16:20,710 DEBUG   HandlerThread:9887 [meta.py:_save_pip():68] save pip done
+2022-09-09 12:16:20,710 DEBUG   HandlerThread:9887 [meta.py:_save_conda():75] save conda
+2022-09-09 12:16:21,594 INFO    Thread-84 :9887 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/conda-environment.yaml
+2022-09-09 12:16:21,594 INFO    Thread-84 :9887 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/wandb-summary.json
+2022-09-09 12:16:21,594 INFO    Thread-84 :9887 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/requirements.txt
+2022-09-09 12:16:23,596 INFO    Thread-84 :9887 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/conda-environment.yaml
+2022-09-09 12:16:23,711 DEBUG   HandlerThread:9887 [meta.py:_save_conda():85] save conda done
+2022-09-09 12:16:23,711 DEBUG   HandlerThread:9887 [meta.py:probe():254] probe done
+2022-09-09 12:16:23,713 DEBUG   SenderThread:9887 [sender.py:send():302] send: files
+2022-09-09 12:16:23,713 INFO    SenderThread:9887 [sender.py:_save_file():1156] saving file wandb-metadata.json with policy now
+2022-09-09 12:16:23,719 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-09 12:16:23,720 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: stop_status
+2022-09-09 12:16:23,721 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-09 12:16:23,724 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-09 12:16:23,725 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-09 12:16:23,726 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-09 12:16:23,727 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:24,002 DEBUG   SenderThread:9887 [sender.py:send():302] send: telemetry
+2022-09-09 12:16:24,004 DEBUG   SenderThread:9887 [sender.py:send():302] send: history
+2022-09-09 12:16:24,005 DEBUG   SenderThread:9887 [sender.py:send():302] send: summary
+2022-09-09 12:16:24,006 INFO    SenderThread:9887 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:16:24,006 DEBUG   SenderThread:9887 [sender.py:send():302] send: history
+2022-09-09 12:16:24,006 DEBUG   SenderThread:9887 [sender.py:send():302] send: summary
+2022-09-09 12:16:24,007 INFO    SenderThread:9887 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:16:24,008 DEBUG   SenderThread:9887 [sender.py:send():302] send: history
+2022-09-09 12:16:24,008 DEBUG   SenderThread:9887 [sender.py:send():302] send: summary
+2022-09-09 12:16:24,009 INFO    SenderThread:9887 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:16:24,009 DEBUG   SenderThread:9887 [sender.py:send():302] send: history
+2022-09-09 12:16:24,009 DEBUG   SenderThread:9887 [sender.py:send():302] send: summary
+2022-09-09 12:16:24,010 INFO    SenderThread:9887 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:16:24,010 DEBUG   SenderThread:9887 [sender.py:send():302] send: telemetry
+2022-09-09 12:16:24,010 DEBUG   SenderThread:9887 [sender.py:send():302] send: exit
+2022-09-09 12:16:24,011 INFO    SenderThread:9887 [sender.py:send_exit():438] handling exit code: 0
+2022-09-09 12:16:24,011 INFO    SenderThread:9887 [sender.py:send_exit():440] handling runtime: 3
+2022-09-09 12:16:24,011 INFO    SenderThread:9887 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:16:24,011 INFO    SenderThread:9887 [sender.py:send_exit():446] send defer
+2022-09-09 12:16:24,012 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:24,012 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:24,013 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 0
+2022-09-09 12:16:24,014 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:24,014 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 0
+2022-09-09 12:16:24,014 INFO    SenderThread:9887 [sender.py:transition_state():459] send defer: 1
+2022-09-09 12:16:24,014 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:24,014 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 1
+2022-09-09 12:16:24,042 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:24,043 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 1
+2022-09-09 12:16:24,043 INFO    SenderThread:9887 [sender.py:transition_state():459] send defer: 2
+2022-09-09 12:16:24,043 DEBUG   SenderThread:9887 [sender.py:send():302] send: stats
+2022-09-09 12:16:24,044 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:24,044 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 2
+2022-09-09 12:16:24,044 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:24,044 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 2
+2022-09-09 12:16:24,044 INFO    SenderThread:9887 [sender.py:transition_state():459] send defer: 3
+2022-09-09 12:16:24,045 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:24,045 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 3
+2022-09-09 12:16:24,045 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:24,045 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 3
+2022-09-09 12:16:24,045 INFO    SenderThread:9887 [sender.py:transition_state():459] send defer: 4
+2022-09-09 12:16:24,046 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:24,046 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 4
+2022-09-09 12:16:24,046 DEBUG   SenderThread:9887 [sender.py:send():302] send: summary
+2022-09-09 12:16:24,047 INFO    SenderThread:9887 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:16:24,047 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:24,047 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 4
+2022-09-09 12:16:24,047 INFO    SenderThread:9887 [sender.py:transition_state():459] send defer: 5
+2022-09-09 12:16:24,048 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:24,048 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 5
+2022-09-09 12:16:24,048 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:24,048 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 5
+2022-09-09 12:16:24,116 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:24,346 INFO    SenderThread:9887 [sender.py:transition_state():459] send defer: 6
+2022-09-09 12:16:24,346 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:24,347 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:24,347 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 6
+2022-09-09 12:16:24,348 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:24,348 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 6
+2022-09-09 12:16:24,348 INFO    SenderThread:9887 [sender.py:transition_state():459] send defer: 7
+2022-09-09 12:16:24,349 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:24,349 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 7
+2022-09-09 12:16:24,349 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:24,349 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 7
+2022-09-09 12:16:24,349 INFO    SenderThread:9887 [dir_watcher.py:finish():362] shutting down directory watcher
+2022-09-09 12:16:24,449 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:24,494 INFO    Thread-88 :9887 [upload_job.py:push():138] Uploaded file /var/folders/t1/g984qjkx2pb2j0zk48hlc4780000gn/T/tmptf9z71r5wandb/2ndc7miz-wandb-metadata.json
+2022-09-09 12:16:24,597 INFO    Thread-84 :9887 [dir_watcher.py:_on_file_modified():292] file/dir modified: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/conda-environment.yaml
+2022-09-09 12:16:24,597 INFO    SenderThread:9887 [dir_watcher.py:_on_file_modified():292] file/dir modified: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/wandb-summary.json
+2022-09-09 12:16:24,598 INFO    SenderThread:9887 [dir_watcher.py:_on_file_modified():292] file/dir modified: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/config.yaml
+2022-09-09 12:16:24,598 INFO    SenderThread:9887 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/wandb-metadata.json
+2022-09-09 12:16:24,598 INFO    SenderThread:9887 [dir_watcher.py:finish():392] scan: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files
+2022-09-09 12:16:24,599 INFO    SenderThread:9887 [dir_watcher.py:finish():406] scan save: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/config.yaml config.yaml
+2022-09-09 12:16:24,599 INFO    SenderThread:9887 [dir_watcher.py:finish():406] scan save: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/wandb-summary.json wandb-summary.json
+2022-09-09 12:16:24,602 INFO    SenderThread:9887 [dir_watcher.py:finish():406] scan save: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/requirements.txt requirements.txt
+2022-09-09 12:16:24,606 INFO    SenderThread:9887 [dir_watcher.py:finish():406] scan save: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/conda-environment.yaml conda-environment.yaml
+2022-09-09 12:16:24,607 INFO    SenderThread:9887 [dir_watcher.py:finish():406] scan save: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/wandb-metadata.json wandb-metadata.json
+2022-09-09 12:16:24,607 INFO    SenderThread:9887 [sender.py:transition_state():459] send defer: 8
+2022-09-09 12:16:24,614 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:24,614 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:24,615 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 8
+2022-09-09 12:16:24,616 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:24,616 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 8
+2022-09-09 12:16:24,616 INFO    SenderThread:9887 [file_pusher.py:finish():171] shutting down file pusher
+2022-09-09 12:16:24,717 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:24,717 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:24,820 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:24,821 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:24,926 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:24,926 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:25,034 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:25,035 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:25,145 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:25,145 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:25,248 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:25,249 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:25,351 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:25,352 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:25,418 INFO    Thread-91 :9887 [upload_job.py:push():138] Uploaded file /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/requirements.txt
+2022-09-09 12:16:25,422 INFO    Thread-90 :9887 [upload_job.py:push():138] Uploaded file /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/wandb-summary.json
+2022-09-09 12:16:25,422 INFO    Thread-89 :9887 [upload_job.py:push():138] Uploaded file /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/config.yaml
+2022-09-09 12:16:25,454 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:25,455 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:25,558 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:25,559 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:25,661 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:25,662 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:25,767 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:25,767 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:25,871 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:25,872 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:25,977 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:25,977 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:26,084 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:26,085 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:26,188 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:26,189 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:26,294 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:26,295 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:26,400 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:26,400 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:26,442 INFO    Thread-92 :9887 [upload_job.py:push():138] Uploaded file /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/files/conda-environment.yaml
+2022-09-09 12:16:26,502 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:26,503 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:26,608 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:26,609 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:26,643 INFO    Thread-83 :9887 [sender.py:transition_state():459] send defer: 9
+2022-09-09 12:16:26,644 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:26,644 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 9
+2022-09-09 12:16:26,644 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:26,645 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 9
+2022-09-09 12:16:26,715 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:26,815 INFO    SenderThread:9887 [sender.py:transition_state():459] send defer: 10
+2022-09-09 12:16:26,815 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:26,816 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:26,816 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 10
+2022-09-09 12:16:26,817 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:26,818 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 10
+2022-09-09 12:16:26,818 INFO    SenderThread:9887 [sender.py:transition_state():459] send defer: 11
+2022-09-09 12:16:26,818 DEBUG   SenderThread:9887 [sender.py:send():302] send: final
+2022-09-09 12:16:26,819 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:16:26,819 DEBUG   SenderThread:9887 [sender.py:send():302] send: footer
+2022-09-09 12:16:26,819 INFO    HandlerThread:9887 [handler.py:handle_request_defer():164] handle defer: 11
+2022-09-09 12:16:26,819 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:16:26,820 INFO    SenderThread:9887 [sender.py:send_request_defer():455] handle sender defer: 11
+2022-09-09 12:16:26,919 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:16:26,920 DEBUG   SenderThread:9887 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:16:26,920 INFO    SenderThread:9887 [file_pusher.py:join():176] waiting for file pusher
+2022-09-09 12:16:27,477 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: sampled_history
+2022-09-09 12:16:27,479 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: get_summary
+2022-09-09 12:16:27,480 DEBUG   HandlerThread:9887 [handler.py:handle_request():141] handle_request: shutdown
+2022-09-09 12:16:27,481 INFO    HandlerThread:9887 [handler.py:finish():810] shutting down handler
+2022-09-09 12:16:27,819 INFO    WriterThread:9887 [datastore.py:close():279] close: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121619-32h7zlrm/run-32h7zlrm.wandb
+2022-09-09 12:16:28,375 INFO    SenderThread:9887 [sender.py:finish():1312] shutting down sender
+2022-09-09 12:16:28,376 INFO    SenderThread:9887 [file_pusher.py:finish():171] shutting down file pusher
+2022-09-09 12:16:28,376 INFO    SenderThread:9887 [file_pusher.py:join():176] waiting for file pusher
+2022-09-09 12:16:42,525 INFO    MainThread:9887 [internal.py:handle_exit():80] Internal process exited
+2022-09-09 12:16:42,525 INFO    MainThread:9887 [internal.py:handle_exit():80] Internal process exited
+2022-09-09 12:16:42,525 INFO    MainThread:9887 [internal.py:handle_exit():80] Internal process exited
+2022-09-09 12:16:42,526 INFO    MainThread:9887 [internal.py:handle_exit():80] Internal process exited
+2022-09-09 12:16:42,526 INFO    MainThread:9887 [internal.py:handle_exit():80] Internal process exited

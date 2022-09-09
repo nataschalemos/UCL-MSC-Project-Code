@@ -99,31 +99,33 @@ f1_loss = L1Loss(reduction='sum')  # Note: when using this loss need to argmax p
 config = {
     "batch_size": 16,
     "epochs": 30,
+    "patience": 10,
     "learning_rate": 5e-5,
     "optimizer": optim.Adam,
     "scheduler": newbob,
     "factor": 0.5,
     "criterion": multi_margin_loss.to(device),
-    "context_window": int(context_window)
+    "context_window": int(context_window),
+    "freeze_models": True
 }
 
-# Start a W&B run
-wandb.init(project="run-new-model-cv-1", group="exp_2", entity="natascha-msc-project", config=config)
-# Save model inputs and hyperparameters
-wandb.config
+# # Start a W&B run
+# wandb.init(project="run-new-model-cv-1", group="exp_2", entity="natascha-msc-project", config=config)
+# # Save model inputs and hyperparameters
+# wandb.config
 
 # Split data into training and validation data
 label_files = pd.read_csv(labels_file, header=None, delimiter='\t')
+
 sessions = ['s_1', 's_2', 's_3', 's_4', 's_5']
 
-# Load sub-models
-roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
-speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
-# for param in speechBert.parameters():
-#     param.requires_grad = False
+# # Load sub-models
+# roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
+# speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
 
 # Perform k-fold cross-validation
-train_UA_runs,train_WA_runs,val_UA_runs,val_WA_runs,test_UA_runs,test_WA_runs = KfoldCv(5, seed, config, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, roberta, speechBert)
+#train_UA_runs,train_WA_runs,val_UA_runs,val_WA_runs,test_UA_runs,test_WA_runs = KfoldCv(5, seed, config, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, roberta, speechBert)
+train_UA_runs,train_WA_runs,val_UA_runs,val_WA_runs,test_UA_runs,test_WA_runs = KfoldCv(5, seed, config, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, models_dir)
 
 # Calculate averages of metrics
 train_UA_avg = np.mean(train_UA_runs)

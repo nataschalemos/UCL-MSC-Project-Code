@@ -1,0 +1,48 @@
+2022-09-09 11:46:03,972 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Configure stats pid to 9229
+2022-09-09 11:46:03,972 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from /Users/nataschah/.config/wandb/settings
+2022-09-09 11:46:03,972 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from /Volumes/TOSHIBA EXT/Code/MyModel/wandb/settings
+2022-09-09 11:46:03,972 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'_require_service': 'True'}
+2022-09-09 11:46:03,973 WARNING MainThread:9229 [wandb_setup.py:_flush():76] Could not find program at <input>
+2022-09-09 11:46:03,973 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': None, 'program': '<input>'}
+2022-09-09 11:46:03,973 INFO    MainThread:9229 [wandb_init.py:_log_setup():461] Logging user logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_114603-2oxaualn/logs/debug.log
+2022-09-09 11:46:03,973 INFO    MainThread:9229 [wandb_init.py:_log_setup():462] Logging internal logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_114603-2oxaualn/logs/debug-internal.log
+2022-09-09 11:46:03,973 INFO    MainThread:9229 [wandb_init.py:init():495] calling init triggers
+2022-09-09 11:46:03,973 INFO    MainThread:9229 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {}
+2022-09-09 11:46:03,974 INFO    MainThread:9229 [wandb_init.py:init():543] wandb.init() called when a run is still active
+2022-09-09 11:46:09,322 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Configure stats pid to 9229
+2022-09-09 11:46:09,322 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from /Users/nataschah/.config/wandb/settings
+2022-09-09 11:46:09,322 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from /Volumes/TOSHIBA EXT/Code/MyModel/wandb/settings
+2022-09-09 11:46:09,323 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'_require_service': 'True'}
+2022-09-09 11:46:09,323 WARNING MainThread:9229 [wandb_setup.py:_flush():76] Could not find program at <input>
+2022-09-09 11:46:09,323 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': None, 'program': '<input>'}
+2022-09-09 11:46:09,323 INFO    MainThread:9229 [wandb_init.py:_log_setup():461] Logging user logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_114603-1s96rr4t/logs/debug.log
+2022-09-09 11:46:09,323 INFO    MainThread:9229 [wandb_init.py:_log_setup():462] Logging internal logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_114603-1s96rr4t/logs/debug-internal.log
+2022-09-09 11:46:09,324 INFO    MainThread:9229 [wandb_init.py:init():495] calling init triggers
+2022-09-09 11:46:09,324 INFO    MainThread:9229 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {}
+2022-09-09 11:46:09,324 INFO    MainThread:9229 [wandb_init.py:init():543] wandb.init() called when a run is still active
+2022-09-09 11:46:09,581 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Configure stats pid to 9229
+2022-09-09 11:46:09,581 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from /Users/nataschah/.config/wandb/settings
+2022-09-09 11:46:09,582 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from /Volumes/TOSHIBA EXT/Code/MyModel/wandb/settings
+2022-09-09 11:46:09,582 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'_require_service': 'True'}
+2022-09-09 11:46:09,582 WARNING MainThread:9229 [wandb_setup.py:_flush():76] Could not find program at <input>
+2022-09-09 11:46:09,582 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': None, 'program': '<input>'}
+2022-09-09 11:46:09,582 INFO    MainThread:9229 [wandb_init.py:_log_setup():461] Logging user logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_114609-34mglf0y/logs/debug.log
+2022-09-09 11:46:09,582 INFO    MainThread:9229 [wandb_init.py:_log_setup():462] Logging internal logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_114609-34mglf0y/logs/debug-internal.log
+2022-09-09 11:46:09,583 INFO    MainThread:9229 [wandb_init.py:init():495] calling init triggers
+2022-09-09 11:46:09,583 INFO    MainThread:9229 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {}
+2022-09-09 11:46:09,583 INFO    MainThread:9229 [wandb_init.py:init():543] wandb.init() called when a run is still active
+2022-09-09 11:46:09,594 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Configure stats pid to 9229
+2022-09-09 11:46:09,594 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from /Users/nataschah/.config/wandb/settings
+2022-09-09 11:46:09,595 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from /Volumes/TOSHIBA EXT/Code/MyModel/wandb/settings
+2022-09-09 11:46:09,595 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'_require_service': 'True'}
+2022-09-09 11:46:09,595 WARNING MainThread:9229 [wandb_setup.py:_flush():76] Could not find program at <input>
+2022-09-09 11:46:09,595 INFO    MainThread:9229 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': None, 'program': '<input>'}
+2022-09-09 11:46:09,595 INFO    MainThread:9229 [wandb_init.py:_log_setup():461] Logging user logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_114609-nmbqwnwz/logs/debug.log
+2022-09-09 11:46:09,595 INFO    MainThread:9229 [wandb_init.py:_log_setup():462] Logging internal logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_114609-nmbqwnwz/logs/debug-internal.log
+2022-09-09 11:46:09,595 INFO    MainThread:9229 [wandb_init.py:init():495] calling init triggers
+2022-09-09 11:46:09,596 INFO    MainThread:9229 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {}
+2022-09-09 11:46:09,596 INFO    MainThread:9229 [wandb_init.py:init():543] wandb.init() called when a run is still active

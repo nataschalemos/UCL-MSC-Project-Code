@@ -40,11 +40,11 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
 
         counter += 1
 
-        #Roberta_tokens, SpeechBERT_tokens, data_TAB, target = data[0], data[1], data[2], data[3]
         Roberta_tokens, SpeechBERT_tokens, data_TAB, target = data['Roberta_tokens'], data['SpeechBERT_tokens'], data['TAB_embedding'], data['label']
         target = torch.argmax(torch.squeeze(target), dim=1)
         total += target.size(0)
-        optimizer.zero_grad()
+        #optimizer.zero_grad()
+        model.zero_grad()
         output_all, output_TAB = model(Roberta_tokens.to(device), SpeechBERT_tokens.to(device), data_TAB.to(device))
 
         # compute batch loss

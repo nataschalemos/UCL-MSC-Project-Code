@@ -1,0 +1,222 @@
+2022-09-09 12:17:23,082 INFO    StreamThr :9948 [internal.py:wandb_internal():93] W&B internal server running at pid: 9948, started at: 2022-09-09 12:17:23.081411
+2022-09-09 12:17:23,083 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: status
+2022-09-09 12:17:23,085 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: status
+2022-09-09 12:17:23,086 DEBUG   SenderThread:9948 [sender.py:send():302] send: header
+2022-09-09 12:17:23,086 DEBUG   SenderThread:9948 [sender.py:send():302] send: run
+2022-09-09 12:17:23,087 INFO    WriterThread:9948 [datastore.py:open_for_write():75] open: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/run-27967e65.wandb
+2022-09-09 12:17:24,391 INFO    SenderThread:9948 [dir_watcher.py:__init__():216] watching files in: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files
+2022-09-09 12:17:24,391 INFO    SenderThread:9948 [sender.py:_start_run_threads():916] run started: 27967e65 with start time 1662722242.123843
+2022-09-09 12:17:24,392 DEBUG   SenderThread:9948 [sender.py:send():302] send: summary
+2022-09-09 12:17:24,393 INFO    SenderThread:9948 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:17:24,395 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: check_version
+2022-09-09 12:17:24,395 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: check_version
+2022-09-09 12:17:24,547 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: run_start
+2022-09-09 12:17:24,549 DEBUG   HandlerThread:9948 [meta.py:__init__():35] meta init
+2022-09-09 12:17:24,549 DEBUG   HandlerThread:9948 [meta.py:__init__():50] meta init done
+2022-09-09 12:17:24,549 DEBUG   HandlerThread:9948 [meta.py:probe():216] probe
+2022-09-09 12:17:24,550 DEBUG   HandlerThread:9948 [meta.py:_setup_git():206] setup git
+2022-09-09 12:17:24,574 DEBUG   HandlerThread:9948 [meta.py:_setup_git():213] setup git done
+2022-09-09 12:17:24,575 DEBUG   HandlerThread:9948 [meta.py:_save_pip():54] save pip
+2022-09-09 12:17:24,576 DEBUG   HandlerThread:9948 [meta.py:_save_pip():68] save pip done
+2022-09-09 12:17:24,576 DEBUG   HandlerThread:9948 [meta.py:_save_conda():75] save conda
+2022-09-09 12:17:25,394 INFO    Thread-84 :9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/wandb-summary.json
+2022-09-09 12:17:25,394 INFO    Thread-84 :9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/requirements.txt
+2022-09-09 12:17:25,394 INFO    Thread-84 :9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/conda-environment.yaml
+2022-09-09 12:17:27,285 DEBUG   HandlerThread:9948 [meta.py:_save_conda():85] save conda done
+2022-09-09 12:17:27,285 DEBUG   HandlerThread:9948 [meta.py:probe():254] probe done
+2022-09-09 12:17:27,287 DEBUG   SenderThread:9948 [sender.py:send():302] send: files
+2022-09-09 12:17:27,287 INFO    SenderThread:9948 [sender.py:_save_file():1156] saving file wandb-metadata.json with policy now
+2022-09-09 12:17:27,293 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-09 12:17:27,293 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: stop_status
+2022-09-09 12:17:27,296 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-09 12:17:27,297 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-09 12:17:27,298 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-09 12:17:27,298 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-09 12:17:27,299 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:27,404 INFO    Thread-84 :9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/wandb-metadata.json
+2022-09-09 12:17:27,405 INFO    Thread-84 :9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/conda-environment.yaml
+2022-09-09 12:17:27,526 DEBUG   SenderThread:9948 [sender.py:send():302] send: telemetry
+2022-09-09 12:17:27,528 DEBUG   SenderThread:9948 [sender.py:send():302] send: history
+2022-09-09 12:17:27,529 DEBUG   SenderThread:9948 [sender.py:send():302] send: summary
+2022-09-09 12:17:27,535 INFO    SenderThread:9948 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:17:27,536 DEBUG   SenderThread:9948 [sender.py:send():302] send: history
+2022-09-09 12:17:27,538 DEBUG   SenderThread:9948 [sender.py:send():302] send: summary
+2022-09-09 12:17:27,539 INFO    SenderThread:9948 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:17:27,539 DEBUG   SenderThread:9948 [sender.py:send():302] send: history
+2022-09-09 12:17:27,539 DEBUG   SenderThread:9948 [sender.py:send():302] send: summary
+2022-09-09 12:17:27,540 INFO    SenderThread:9948 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:17:27,541 DEBUG   SenderThread:9948 [sender.py:send():302] send: history
+2022-09-09 12:17:27,541 DEBUG   SenderThread:9948 [sender.py:send():302] send: summary
+2022-09-09 12:17:27,542 INFO    SenderThread:9948 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:17:27,542 DEBUG   SenderThread:9948 [sender.py:send():302] send: telemetry
+2022-09-09 12:17:27,542 DEBUG   SenderThread:9948 [sender.py:send():302] send: exit
+2022-09-09 12:17:27,543 INFO    SenderThread:9948 [sender.py:send_exit():438] handling exit code: 0
+2022-09-09 12:17:27,543 INFO    SenderThread:9948 [sender.py:send_exit():440] handling runtime: 2
+2022-09-09 12:17:27,544 INFO    SenderThread:9948 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:17:27,544 INFO    SenderThread:9948 [sender.py:send_exit():446] send defer
+2022-09-09 12:17:27,544 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:27,545 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:27,545 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 0
+2022-09-09 12:17:27,546 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:27,546 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 0
+2022-09-09 12:17:27,546 INFO    SenderThread:9948 [sender.py:transition_state():459] send defer: 1
+2022-09-09 12:17:27,546 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:27,546 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 1
+2022-09-09 12:17:27,632 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:27,633 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 1
+2022-09-09 12:17:27,633 INFO    SenderThread:9948 [sender.py:transition_state():459] send defer: 2
+2022-09-09 12:17:27,633 DEBUG   SenderThread:9948 [sender.py:send():302] send: stats
+2022-09-09 12:17:27,634 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:27,634 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 2
+2022-09-09 12:17:27,635 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:27,635 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 2
+2022-09-09 12:17:27,635 INFO    SenderThread:9948 [sender.py:transition_state():459] send defer: 3
+2022-09-09 12:17:27,635 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:27,635 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 3
+2022-09-09 12:17:27,636 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:27,636 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 3
+2022-09-09 12:17:27,636 INFO    SenderThread:9948 [sender.py:transition_state():459] send defer: 4
+2022-09-09 12:17:27,636 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:27,636 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 4
+2022-09-09 12:17:27,637 DEBUG   SenderThread:9948 [sender.py:send():302] send: summary
+2022-09-09 12:17:27,638 INFO    SenderThread:9948 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:17:27,638 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:27,638 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 4
+2022-09-09 12:17:27,638 INFO    SenderThread:9948 [sender.py:transition_state():459] send defer: 5
+2022-09-09 12:17:27,639 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:27,639 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 5
+2022-09-09 12:17:27,639 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:27,639 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 5
+2022-09-09 12:17:27,649 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:27,892 INFO    SenderThread:9948 [sender.py:transition_state():459] send defer: 6
+2022-09-09 12:17:27,892 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:27,893 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:27,894 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 6
+2022-09-09 12:17:27,894 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:27,894 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 6
+2022-09-09 12:17:27,894 INFO    SenderThread:9948 [sender.py:transition_state():459] send defer: 7
+2022-09-09 12:17:27,894 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:27,894 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 7
+2022-09-09 12:17:27,894 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:27,894 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 7
+2022-09-09 12:17:27,895 INFO    SenderThread:9948 [dir_watcher.py:finish():362] shutting down directory watcher
+2022-09-09 12:17:27,998 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:28,048 INFO    Thread-88 :9948 [upload_job.py:push():138] Uploaded file /var/folders/t1/g984qjkx2pb2j0zk48hlc4780000gn/T/tmpe00lw69dwandb/39zmqsl4-wandb-metadata.json
+2022-09-09 12:17:28,405 INFO    SenderThread:9948 [dir_watcher.py:_on_file_modified():292] file/dir modified: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/wandb-summary.json
+2022-09-09 12:17:28,405 INFO    SenderThread:9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/config.yaml
+2022-09-09 12:17:28,405 INFO    SenderThread:9948 [dir_watcher.py:finish():392] scan: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files
+2022-09-09 12:17:28,406 INFO    SenderThread:9948 [dir_watcher.py:finish():406] scan save: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/config.yaml config.yaml
+2022-09-09 12:17:28,406 INFO    SenderThread:9948 [dir_watcher.py:finish():406] scan save: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/wandb-summary.json wandb-summary.json
+2022-09-09 12:17:28,409 INFO    SenderThread:9948 [dir_watcher.py:finish():406] scan save: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/requirements.txt requirements.txt
+2022-09-09 12:17:28,412 INFO    SenderThread:9948 [dir_watcher.py:finish():406] scan save: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/conda-environment.yaml conda-environment.yaml
+2022-09-09 12:17:28,413 INFO    SenderThread:9948 [dir_watcher.py:finish():406] scan save: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/wandb-metadata.json wandb-metadata.json
+2022-09-09 12:17:28,416 INFO    SenderThread:9948 [sender.py:transition_state():459] send defer: 8
+2022-09-09 12:17:28,418 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:28,420 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:28,421 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 8
+2022-09-09 12:17:28,421 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:28,421 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 8
+2022-09-09 12:17:28,421 INFO    SenderThread:9948 [file_pusher.py:finish():171] shutting down file pusher
+2022-09-09 12:17:28,528 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:28,528 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:28,635 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:28,636 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:28,745 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:28,746 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:28,851 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:28,852 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:28,956 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:28,957 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:29,062 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:29,063 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:29,169 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:29,169 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:29,220 INFO    Thread-90 :9948 [upload_job.py:push():138] Uploaded file /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/wandb-summary.json
+2022-09-09 12:17:29,221 INFO    Thread-89 :9948 [upload_job.py:push():138] Uploaded file /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/config.yaml
+2022-09-09 12:17:29,221 INFO    Thread-92 :9948 [upload_job.py:push():138] Uploaded file /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/conda-environment.yaml
+2022-09-09 12:17:29,223 INFO    Thread-91 :9948 [upload_job.py:push():138] Uploaded file /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/files/requirements.txt
+2022-09-09 12:17:29,278 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:29,280 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:29,388 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:29,389 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:29,426 INFO    Thread-83 :9948 [sender.py:transition_state():459] send defer: 9
+2022-09-09 12:17:29,427 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:29,427 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 9
+2022-09-09 12:17:29,427 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:29,427 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 9
+2022-09-09 12:17:29,493 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:29,718 INFO    SenderThread:9948 [sender.py:transition_state():459] send defer: 10
+2022-09-09 12:17:29,719 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:29,720 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:29,721 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 10
+2022-09-09 12:17:29,722 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:29,722 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 10
+2022-09-09 12:17:29,722 INFO    SenderThread:9948 [sender.py:transition_state():459] send defer: 11
+2022-09-09 12:17:29,723 DEBUG   SenderThread:9948 [sender.py:send():302] send: final
+2022-09-09 12:17:29,724 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: defer
+2022-09-09 12:17:29,724 DEBUG   SenderThread:9948 [sender.py:send():302] send: footer
+2022-09-09 12:17:29,724 INFO    HandlerThread:9948 [handler.py:handle_request_defer():164] handle defer: 11
+2022-09-09 12:17:29,725 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: defer
+2022-09-09 12:17:29,725 INFO    SenderThread:9948 [sender.py:send_request_defer():455] handle sender defer: 11
+2022-09-09 12:17:29,828 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: poll_exit
+2022-09-09 12:17:29,828 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: poll_exit
+2022-09-09 12:17:29,828 INFO    SenderThread:9948 [file_pusher.py:join():176] waiting for file pusher
+2022-09-09 12:17:30,420 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: sampled_history
+2022-09-09 12:17:30,422 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: get_summary
+2022-09-09 12:17:30,424 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: shutdown
+2022-09-09 12:17:30,424 INFO    HandlerThread:9948 [handler.py:finish():810] shutting down handler
+2022-09-09 12:17:30,727 INFO    WriterThread:9948 [datastore.py:close():279] close: /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_121722-27967e65/run-27967e65.wandb
+2022-09-09 12:17:31,313 INFO    SenderThread:9948 [sender.py:finish():1312] shutting down sender
+2022-09-09 12:17:31,313 INFO    SenderThread:9948 [file_pusher.py:finish():171] shutting down file pusher
+2022-09-09 12:17:31,313 INFO    SenderThread:9948 [file_pusher.py:join():176] waiting for file pusher
+2022-09-09 12:21:28,962 INFO    StreamThr :9948 [internal.py:wandb_internal():93] W&B internal server running at pid: 9948, started at: 2022-09-09 12:21:26.928476
+2022-09-09 12:21:29,287 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: status
+2022-09-09 12:21:29,289 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: status
+2022-09-09 12:21:29,290 DEBUG   SenderThread:9948 [sender.py:send():302] send: header
+2022-09-09 12:21:29,290 INFO    WriterThread:9948 [datastore.py:open_for_write():75] open: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/run-2jphi0e3.wandb
+2022-09-09 12:21:29,290 DEBUG   SenderThread:9948 [sender.py:send():302] send: run
+2022-09-09 12:21:29,866 INFO    SenderThread:9948 [dir_watcher.py:__init__():216] watching files in: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files
+2022-09-09 12:21:29,867 INFO    SenderThread:9948 [sender.py:_start_run_threads():916] run started: 2jphi0e3 with start time 1662722486.934953
+2022-09-09 12:21:29,869 DEBUG   SenderThread:9948 [sender.py:send():302] send: summary
+2022-09-09 12:21:29,871 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: check_version
+2022-09-09 12:21:29,909 INFO    SenderThread:9948 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-09 12:21:29,911 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: check_version
+2022-09-09 12:21:30,016 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: run_start
+2022-09-09 12:21:30,023 DEBUG   HandlerThread:9948 [meta.py:__init__():35] meta init
+2022-09-09 12:21:30,025 DEBUG   HandlerThread:9948 [meta.py:__init__():50] meta init done
+2022-09-09 12:21:30,025 DEBUG   HandlerThread:9948 [meta.py:probe():216] probe
+2022-09-09 12:21:30,031 DEBUG   HandlerThread:9948 [meta.py:_setup_git():206] setup git
+2022-09-09 12:21:30,152 DEBUG   HandlerThread:9948 [meta.py:_setup_git():213] setup git done
+2022-09-09 12:21:30,152 DEBUG   HandlerThread:9948 [meta.py:_save_pip():54] save pip
+2022-09-09 12:21:30,202 DEBUG   HandlerThread:9948 [meta.py:_save_pip():68] save pip done
+2022-09-09 12:21:30,203 DEBUG   HandlerThread:9948 [meta.py:_save_conda():75] save conda
+2022-09-09 12:21:30,868 INFO    Thread-102:9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/requirements.txt
+2022-09-09 12:21:30,868 INFO    Thread-102:9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/wandb-summary.json
+2022-09-09 12:21:30,868 INFO    Thread-102:9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/conda-environment.yaml
+2022-09-09 12:21:34,074 DEBUG   HandlerThread:9948 [meta.py:_save_conda():85] save conda done
+2022-09-09 12:21:34,075 DEBUG   HandlerThread:9948 [meta.py:probe():254] probe done
+2022-09-09 12:21:34,080 DEBUG   SenderThread:9948 [sender.py:send():302] send: files
+2022-09-09 12:21:34,081 INFO    SenderThread:9948 [sender.py:_save_file():1156] saving file wandb-metadata.json with policy now
+2022-09-09 12:21:34,089 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-09 12:21:34,090 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: stop_status
+2022-09-09 12:21:34,337 DEBUG   SenderThread:9948 [sender.py:send():302] send: telemetry
+2022-09-09 12:21:34,870 INFO    Thread-102:9948 [dir_watcher.py:_on_file_modified():292] file/dir modified: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/conda-environment.yaml
+2022-09-09 12:21:34,871 INFO    Thread-102:9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/wandb-metadata.json
+2022-09-09 12:21:34,871 INFO    Thread-102:9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/conda-environment.yaml
+2022-09-09 12:21:34,871 INFO    Thread-102:9948 [dir_watcher.py:_on_file_moved():300] file/dir moved: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/conda-environment.yaml -> /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/output.log
+2022-09-09 12:21:35,181 INFO    Thread-106:9948 [upload_job.py:push():138] Uploaded file /var/folders/t1/g984qjkx2pb2j0zk48hlc4780000gn/T/tmpi0rej4r0wandb/a30fb179-wandb-metadata.json
+2022-09-09 12:21:36,880 INFO    Thread-102:9948 [dir_watcher.py:_on_file_created():275] file/dir created: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/output.log
+2022-09-09 12:21:37,885 INFO    Thread-102:9948 [dir_watcher.py:_on_file_modified():292] file/dir modified: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/output.log
+2022-09-09 12:21:49,349 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-09 12:21:49,397 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: stop_status
+2022-09-09 12:21:58,681 DEBUG   SenderThread:9948 [sender.py:send():302] send: stats
+2022-09-09 12:22:00,954 INFO    Thread-102:9948 [dir_watcher.py:_on_file_modified():292] file/dir modified: /Volumes/TOSHIBA EXT/Code/wandb/run-20220909_122126-2jphi0e3/files/config.yaml
+2022-09-09 12:22:04,641 DEBUG   HandlerThread:9948 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-09 12:22:04,642 DEBUG   SenderThread:9948 [sender.py:send_request():316] send_request: stop_status
+2022-09-09 12:22:15,121 INFO    MainThread:9948 [internal.py:handle_exit():80] Internal process exited
+2022-09-09 12:22:15,121 INFO    MainThread:9948 [internal.py:handle_exit():80] Internal process exited
+2022-09-09 12:22:15,122 INFO    MainThread:9948 [internal.py:handle_exit():80] Internal process exited
+2022-09-09 12:22:15,122 INFO    MainThread:9948 [internal.py:handle_exit():80] Internal process exited
+2022-09-09 12:22:15,122 INFO    MainThread:9948 [internal.py:handle_exit():80] Internal process exited
+2022-09-09 12:22:15,122 INFO    MainThread:9948 [internal.py:handle_exit():80] Internal process exited
+2022-09-09 12:22:15,123 WARNING MsgRouterThr:9948 [router.py:message_loop():73] EOFError seen in message_loop

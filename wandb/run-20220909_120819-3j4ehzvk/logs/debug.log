@@ -1,0 +1,69 @@
+2022-09-09 12:08:19,586 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Configure stats pid to 9674
+2022-09-09 12:08:19,586 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from /Users/nataschah/.config/wandb/settings
+2022-09-09 12:08:19,586 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from /Volumes/TOSHIBA EXT/Code/MyModel/wandb/settings
+2022-09-09 12:08:19,586 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'_require_service': 'True'}
+2022-09-09 12:08:19,586 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'test_file.py', 'program': '/Volumes/TOSHIBA EXT/Code/MyModel/test_file.py'}
+2022-09-09 12:08:19,587 INFO    MainThread:9674 [wandb_init.py:_log_setup():461] Logging user logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_120819-3j4ehzvk/logs/debug.log
+2022-09-09 12:08:19,587 INFO    MainThread:9674 [wandb_init.py:_log_setup():462] Logging internal logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_120819-3j4ehzvk/logs/debug-internal.log
+2022-09-09 12:08:19,587 INFO    MainThread:9674 [wandb_init.py:init():495] calling init triggers
+2022-09-09 12:08:19,587 INFO    MainThread:9674 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {'batch_size': 16, 'epochs': 30}
+2022-09-09 12:08:19,587 INFO    MainThread:9674 [wandb_init.py:init():548] starting backend
+2022-09-09 12:08:19,587 INFO    MainThread:9674 [wandb_init.py:init():552] setting up manager
+2022-09-09 12:08:19,592 INFO    MainThread:9674 [backend.py:_multiprocessing_setup():99] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2022-09-09 12:08:19,596 INFO    MainThread:9674 [wandb_init.py:init():558] backend started and connected
+2022-09-09 12:08:19,600 INFO    MainThread:9674 [wandb_init.py:init():636] updated telemetry
+2022-09-09 12:08:19,614 INFO    MainThread:9674 [wandb_init.py:init():668] communicating run to backend with 30 second timeout
+2022-09-09 12:08:22,128 INFO    MainThread:9674 [wandb_run.py:_on_init():1982] communicating current version
+2022-09-09 12:08:22,226 INFO    MainThread:9674 [wandb_run.py:_on_init():1986] got version response upgrade_message: "wandb version 0.13.3 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2022-09-09 12:08:22,226 INFO    MainThread:9674 [wandb_init.py:init():700] starting run threads in backend
+2022-09-09 12:08:25,779 INFO    MainThread:9674 [wandb_run.py:_console_start():1962] atexit reg
+2022-09-09 12:08:25,780 INFO    MainThread:9674 [wandb_run.py:_redirect():1820] redirect: SettingsConsole.WRAP_RAW
+2022-09-09 12:08:25,780 INFO    MainThread:9674 [wandb_run.py:_redirect():1885] Wrapping output streams.
+2022-09-09 12:08:25,780 INFO    MainThread:9674 [wandb_run.py:_redirect():1907] Redirects installed.
+2022-09-09 12:08:25,780 INFO    MainThread:9674 [wandb_init.py:init():732] run started, returning control to user process
+2022-09-09 12:08:25,791 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Configure stats pid to 9674
+2022-09-09 12:08:25,791 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from /Users/nataschah/.config/wandb/settings
+2022-09-09 12:08:25,791 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from /Volumes/TOSHIBA EXT/Code/MyModel/wandb/settings
+2022-09-09 12:08:25,791 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'_require_service': 'True'}
+2022-09-09 12:08:25,791 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'test_file.py', 'program': '/Volumes/TOSHIBA EXT/Code/MyModel/test_file.py'}
+2022-09-09 12:08:25,792 INFO    MainThread:9674 [wandb_init.py:_log_setup():461] Logging user logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_120825-1/logs/debug.log
+2022-09-09 12:08:25,792 INFO    MainThread:9674 [wandb_init.py:_log_setup():462] Logging internal logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_120825-1/logs/debug-internal.log
+2022-09-09 12:08:25,792 INFO    MainThread:9674 [wandb_init.py:init():495] calling init triggers
+2022-09-09 12:08:25,792 INFO    MainThread:9674 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {'batch_size': 16, 'epochs': 30}
+2022-09-09 12:08:25,792 INFO    MainThread:9674 [wandb_init.py:init():543] wandb.init() called when a run is still active
+2022-09-09 12:08:25,801 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Configure stats pid to 9674
+2022-09-09 12:08:25,801 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from /Users/nataschah/.config/wandb/settings
+2022-09-09 12:08:25,801 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from /Volumes/TOSHIBA EXT/Code/MyModel/wandb/settings
+2022-09-09 12:08:25,801 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'_require_service': 'True'}
+2022-09-09 12:08:25,801 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'test_file.py', 'program': '/Volumes/TOSHIBA EXT/Code/MyModel/test_file.py'}
+2022-09-09 12:08:25,801 INFO    MainThread:9674 [wandb_init.py:_log_setup():461] Logging user logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_120825-2/logs/debug.log
+2022-09-09 12:08:25,801 INFO    MainThread:9674 [wandb_init.py:_log_setup():462] Logging internal logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_120825-2/logs/debug-internal.log
+2022-09-09 12:08:25,802 INFO    MainThread:9674 [wandb_init.py:init():495] calling init triggers
+2022-09-09 12:08:25,802 INFO    MainThread:9674 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {'batch_size': 16, 'epochs': 30}
+2022-09-09 12:08:25,802 INFO    MainThread:9674 [wandb_init.py:init():543] wandb.init() called when a run is still active
+2022-09-09 12:08:29,323 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Configure stats pid to 9674
+2022-09-09 12:08:29,323 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from /Users/nataschah/.config/wandb/settings
+2022-09-09 12:08:29,323 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from /Volumes/TOSHIBA EXT/Code/MyModel/wandb/settings
+2022-09-09 12:08:29,323 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'_require_service': 'True'}
+2022-09-09 12:08:29,323 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'test_file.py', 'program': '/Volumes/TOSHIBA EXT/Code/MyModel/test_file.py'}
+2022-09-09 12:08:29,324 INFO    MainThread:9674 [wandb_init.py:_log_setup():461] Logging user logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_120825-3/logs/debug.log
+2022-09-09 12:08:29,324 INFO    MainThread:9674 [wandb_init.py:_log_setup():462] Logging internal logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_120825-3/logs/debug-internal.log
+2022-09-09 12:08:29,325 INFO    MainThread:9674 [wandb_init.py:init():495] calling init triggers
+2022-09-09 12:08:29,325 INFO    MainThread:9674 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {'batch_size': 16, 'epochs': 30}
+2022-09-09 12:08:29,325 INFO    MainThread:9674 [wandb_init.py:init():543] wandb.init() called when a run is still active
+2022-09-09 12:08:29,336 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Configure stats pid to 9674
+2022-09-09 12:08:29,337 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from /Users/nataschah/.config/wandb/settings
+2022-09-09 12:08:29,337 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from /Volumes/TOSHIBA EXT/Code/MyModel/wandb/settings
+2022-09-09 12:08:29,337 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'_require_service': 'True'}
+2022-09-09 12:08:29,337 INFO    MainThread:9674 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'test_file.py', 'program': '/Volumes/TOSHIBA EXT/Code/MyModel/test_file.py'}
+2022-09-09 12:08:29,337 INFO    MainThread:9674 [wandb_init.py:_log_setup():461] Logging user logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_120829-4/logs/debug.log
+2022-09-09 12:08:29,337 INFO    MainThread:9674 [wandb_init.py:_log_setup():462] Logging internal logs to /Volumes/TOSHIBA EXT/Code/MyModel/wandb/run-20220909_120829-4/logs/debug-internal.log
+2022-09-09 12:08:29,338 INFO    MainThread:9674 [wandb_init.py:init():495] calling init triggers
+2022-09-09 12:08:29,338 INFO    MainThread:9674 [wandb_init.py:init():499] wandb.init called with sweep_config: {}
+config: {'batch_size': 16, 'epochs': 30}
+2022-09-09 12:08:29,338 INFO    MainThread:9674 [wandb_init.py:init():543] wandb.init() called when a run is still active

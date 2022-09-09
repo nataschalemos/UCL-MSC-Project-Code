@@ -62,7 +62,7 @@ class Time_async(nn.Module):
 
 
 class Fusion(nn.Module):  # (note: this class defines the whole model)
-    def __init__(self, roberta, speechBert, fuse_dim=128, dropout_rate=0.0, output_dim=4):  # NOTE: changed output_dim from 5 to 4
+    def __init__(self, roberta, speechBert, fuse_dim=128, dropout_rate=0.0, output_dim=4, freeze_models=False):  # NOTE: changed output_dim from 5 to 4
         super(Fusion, self).__init__()
 
         #self.b1 = roberta.eval()
@@ -75,6 +75,13 @@ class Fusion(nn.Module):  # (note: this class defines the whole model)
         #self.dropout = nn.Dropout(p=dropout_rate)
 
         #self.layer_cat_out = nn.Linear(1024 + 768 + 64 * 5, output_dim)
+
+        # Freeze models
+        if freeze_models:
+            for param in roberta.parameters():
+                param.requires_grad = False
+            for param in speechBert.parameters():
+                param.requires_grad = False
 
     def forward(self, x, y, z):
         x = self.b1.extract_features(x)[:, 0, :]  # x: 200,1024
