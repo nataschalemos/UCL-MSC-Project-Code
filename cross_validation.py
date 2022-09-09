@@ -51,7 +51,7 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
     for run, split_sess in tqdm(enumerate(kfold_total), total=fold*2):
 
         # Start a W&B run
-        wandb_run = wandb.init(project="run-new-model-cv-3", group=group_id, name="run_"+str(run), entity="natascha-msc-project", config=config)
+        wandb_run = wandb.init(project="run-new-model-cv-4", group=group_id, name="run_"+str(run), entity="natascha-msc-project", config=config)
         # Save model inputs and hyperparameters
         wandb_run.config
 
