@@ -59,6 +59,6 @@ def test(model, test_dataloader, test_dataset, criterion, device):
         # compute val accuracy after one epoch
         test_unweighted_accuracy = test_running_u_acc / counter
         test_weighted_accuracy = test_running_w_acc / counter
-        test_class_accuracy = (test_running_class_acc / counter).cpu().numpy()
+        test_class_accuracy = (test_running_class_acc / counter).detach().cpu().numpy()
 
         return test_loss, test_unweighted_accuracy, test_weighted_accuracy, test_class_accuracy
