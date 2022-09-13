@@ -108,7 +108,8 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
 def Frobenius(mat):
     size = mat.size()
     if len(size) == 3:  # batched matrix
-        ret = (torch.sum(torch.sum((mat ** 2), 1), 2).squeeze() + 1e-10) ** 0.5
+        #ret = (torch.sum(torch.sum((mat ** 2), 1), 2).squeeze() + 1e-10) ** 0.5
+        ret = (torch.sum(torch.sum((mat ** 2), 1), 1).squeeze() + 1e-10) ** 0.5
         return torch.sum(ret) / size[0]
     else:
         raise Exception('matrix for computing Frobenius norm should be with 3 dims')

@@ -62,7 +62,7 @@ max_audio_tokens = sys.argv[6]
 # # Define directory with downloaded models
 # models_dir = wdir + 'Models/bert_kmeans/'
 # # Define window for BERT sentence context embeddings
-# context_window = 1
+# context_window = 3
 # # Define max sequence length for text tokens
 # max_text_tokens = 256
 # # Define max sequence length for audio tokens
