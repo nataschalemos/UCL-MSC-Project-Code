@@ -13,14 +13,15 @@ import numpy as np
 from torch.autograd import Variable
 
 
-def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, step):
+def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, step, penalty, log_results):
 
     ##
-    I = Variable(torch.zeros(16, 5, 5)) # bs, att_heads, att_heads
-    for i in range(16):
-        for j in range(5):
-            I.data[i][j][j] = 1
-    I = I.to(device)
+    if penalty:
+        I = Variable(torch.zeros(16, 5, 5)) # bs, att_heads, att_heads
+        for i in range(16):
+            for j in range(5):
+                I.data[i][j][j] = 1
+        I = I.to(device)
     ##
 
     print('Training')
@@ -64,11 +65,12 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
         #running_loss += loss.item() # replace current loss with penalized loss
 
         ##
-        # add penalization term
-        attention = output_TAB.to(device)
-        attentionT = torch.transpose(attention, 1, 2).contiguous()
-        extra_loss = Frobenius(torch.bmm(attention, attentionT.to(device)) - I[:attention.size(0)])
-        loss += 0.3 * extra_loss # penalization coef=0.3
+        if penalty:
+            # add penalization term
+            attention = output_TAB.to(device)
+            attentionT = torch.transpose(attention, 1, 2).contiguous()
+            extra_loss = Frobenius(torch.bmm(attention, attentionT.to(device)) - I[:attention.size(0)])
+            loss += 0.3 * extra_loss # penalization coef=0.3
         ##
 
         _, preds = torch.max(output_all.data, 1)
@@ -87,15 +89,17 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
         # update model parameters
         optimizer.step()
 
-        # Log metrics inside your training loop to visualize model performance
-        # log every 20 mini-batches
-        if i % batch_checkpoint == batch_checkpoint - 1:  # log every 20 mini-batches
-            step += 1
-            wandb.log({"train": {"loss": running_loss / batch_checkpoint,
-                                 "unweighted_accuracy": running_u_acc / batch_checkpoint, "weighted_accuracy": running_w_acc / batch_checkpoint, "custom_step_train": step}})
-            running_loss = 0.0
-            running_u_acc = 0.0
-            running_w_acc = 0.0
+        if log_results:
+
+            # Log metrics inside your training loop to visualize model performance
+            # log every 20 mini-batches
+            if i % batch_checkpoint == batch_checkpoint - 1:  # log every 20 mini-batches
+                step += 1
+                wandb.log({"train": {"loss": running_loss / batch_checkpoint,
+                                     "unweighted_accuracy": running_u_acc / batch_checkpoint, "weighted_accuracy": running_w_acc / batch_checkpoint, "custom_step_train": step}})
+                running_loss = 0.0
+                running_u_acc = 0.0
+                running_w_acc = 0.0
 
     # compute train loss after one epoch
     train_loss = train_running_loss / counter

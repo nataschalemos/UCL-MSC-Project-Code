@@ -108,6 +108,39 @@ class Fusion(nn.Module):  # (note: this class defines the whole model)
     #     return out, A3
 
 
+# Class for fine-tuning LHS
+class LHS(nn.Module):
+    def __init__(self, roberta, speechBert, fuse_dim=128, dropout_rate=0.0, output_dim=4,
+                 freeze_models=False):  # NOTE: changed output_dim from 5 to 4
+        super(LHS, self).__init__()
+
+        self.b1 = roberta
+        self.b2 = speechBert
+        self.layer_cat = nn.Linear(1024 + 768, fuse_dim)
+        self.layer_out = nn.Linear(fuse_dim, output_dim, bias=False)
+        # self.dropout = nn.Dropout(p=dropout_rate)
+
+        # Freeze models
+        if freeze_models:
+            for param in roberta.parameters():
+                param.requires_grad = False
+            for param in speechBert.parameters():
+                param.requires_grad = False
+
+    def forward(self, x, y, z):
+        x = self.b1.extract_features(x)[:, 0, :]  # x: 200,1024
+        y = self.b2.extract_features(y)[:, 0, :]  # y: 200,768
+        out = torch.cat((x, y), 1)  # 200,2112
+
+        out = F.relu(self.layer_cat(out))  # 200,128 # TODO: check if dim fuse_dim=128 is appropriate
+        out = self.layer_out(out)  # 200,4
+
+        return out
+
+
+
+
+
 # Newbob scheduler
 class newbob():
     def __init__(self, optimizer, factor, model):

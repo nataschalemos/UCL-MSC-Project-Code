@@ -114,11 +114,11 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
             model.train()
             train_epoch_loss, train_epoch_u_accuracy, train_epoch_w_accuracy, curr_train_step = fit(model, train_dataloader, train_dataset,
                                                                           optimizer,
-                                                                          config["criterion"], device, step_train)
+                                                                          config["criterion"], device, step_train, config["penalty"], config["log_results"])
             step_train += curr_train_step
 
             # Validate model
-            val_epoch_loss, val_epoch_u_accuracy, val_epoch_w_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"], device, step_val)
+            val_epoch_loss, val_epoch_u_accuracy, val_epoch_w_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"], device, step_val, config["log_results"])
             step_val += 1
 
             train_loss.append(train_epoch_loss)

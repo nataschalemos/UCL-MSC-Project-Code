@@ -16,6 +16,7 @@ import torch.optim as optim
 from torch.nn import MultiMarginLoss, L1Loss
 import sys
 import torch.nn.functional as F
+from torchvision import models
 
 from pytorch_metric_learning import losses
 import wandb
@@ -24,8 +25,9 @@ from dataset_loader import IemocapDataset, ToTensor
 from train_function import fit
 from validation_function import validate
 from test_function import test
-from model_structure import newbob, Fusion
+from model_structure import newbob, Fusion, LHS
 from utils import collate_tokens, collater, get_num_sentences, collate_batch
+from finetune_ssl import finetune
 
 from fairseq.models.roberta import RobertaModel
 
@@ -57,11 +59,11 @@ max_audio_tokens = sys.argv[6]
 # # Define directory with downloaded models
 # models_dir = wdir + 'Models/bert_kmeans/'
 # # Define window for BERT sentence context embeddings
-# context_window = 1
+# context_window = 3
 # # Define max sequence length for text tokens
-# max_text_tokens=256
+# max_text_tokens = 256
 # # Define max sequence length for audio tokens
-# max_audio_tokens=1024
+# max_audio_tokens = 1024
 
 # Define path to "labels_train_t.txt" file
 labels_file = data_dir + 'labels_train_t.txt'
@@ -98,16 +100,36 @@ f1_loss = L1Loss(reduction='sum')  # Note: when using this loss need to argmax p
 config = {
     "batch_size": 16,
     "epochs": 100,
+    "patience": 10,
     "learning_rate": 5e-5,
     "optimizer": optim.Adam,
     "scheduler": newbob,
     "factor": 0.5,
     "criterion": multi_margin_loss.to(device),
-    "context_window": int(context_window)
+    "context_window": int(context_window),
+    "freeze_models": True,
+    "penalty": False,
+    "finetune": True,
+    "log_results": True
+}
+
+# Define learning parameters for finetuning
+config_finetune = {
+    "batch_size": 16,
+    "epochs": 3,
+    "learning_rate": 5e-5,
+    "optimizer": optim.Adam,
+    "scheduler": newbob,
+    "factor": 0.5,
+    "criterion": multi_margin_loss.to(device),
+    "context_window": int(context_window),
+    "freeze_models": False,
+    "penalty": False,
+    "log_results": False
 }
 
 # Start a W&B run
-wandb.init(project="run-s5_new_model_v1", entity="natascha-msc-project", config=config)
+wandb.init(project="sess_5_setup_with_finetuned", entity="natascha-msc-project", config=config)
 # Save model inputs and hyperparameters
 wandb.config
 
@@ -129,6 +151,11 @@ print("Train dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".fo
                                                                                      train_num[2], train_num[3]))
 print("Val dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".format(val_num[0], val_num[1], val_num[2],
                                                                                    val_num[3]))
+
+# Store number of utterances in each set for this cv split
+wandb.run.summary["train_utterances"] = len(train_label_files)
+wandb.run.summary["val_utterances"] = len(val_label_files)
+wandb.run.summary["test_utterances"] = len(test_label_files)
 
 # Load dataset and dataloader
 train_dataset = IemocapDataset(labels_file=train_label_files,
@@ -156,11 +183,32 @@ val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"],
 # Load sub-models
 roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
 speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
-# for param in speechBert.parameters():
-#     param.requires_grad = False
 
-# Instantiate model class
-model = Fusion(roberta, speechBert, fuse_dim=128, dropout_rate=0.0).to(device)
+if config["finetune"]:
+    "Jointly fine-tuning SSL models..."
+    # Finetune sub-models
+    finetune(data_dir, models_dir, config_finetune, train_dataset, val_dataset, train_dataloader, val_dataloader, device)
+
+    # Load sub-models
+    roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
+    speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
+
+    # Load finetuned sub-model weights
+    "Loading fine-tuned models"
+    model = LHS(roberta, speechBert, freeze_models=config["freeze_models"]).to(device) # TODO: check if alright to freeze these layers in this step and not later
+    model.load_state_dict(torch.load(data_dir + "outputs/fine_tuned_LHS_branch.pth"))
+
+    # Build full model using fine-tuned weights # TODO: select layers for b1 and b2 in fine-tuned model and set these as b1 and b2 in the Fusion model
+    roberta = model.b1
+    speechBert = model.b2
+
+else:
+    # Load sub-models
+    roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
+    speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
+
+    # Instantiate model class
+    model = Fusion(roberta, speechBert, freeze_models=config["freeze_models"]).to(device)
 
 # Instantiate optimizer class
 optimizer = config["optimizer"](model.parameters(), lr=config["learning_rate"])
@@ -172,9 +220,8 @@ train_loss, train_u_accuracy, train_w_accuracy = [], [], []
 val_loss, val_u_accuracy, val_w_accuracy = [], [], []
 
 # Early stopping parameters
-last_loss = 1000
-patience = 4
-trigger_times = 0
+last_best_loss = 1000
+trigger_times_best = 0
 
 # initialize step for WandB plots
 step_train = 0
@@ -185,13 +232,17 @@ for epoch in range(config["epochs"]):
     print(f'Epoch {epoch + 1} of {config["epochs"]}')
 
     # Fit model
-    train_epoch_loss, train_epoch_u_accuracy, train_epoch_w_accuracy, curr_train_step = fit(model, train_dataloader, train_dataset, optimizer,
-                                                                  config["criterion"], device, step_train)
+    model.train()
+    train_epoch_loss, train_epoch_u_accuracy, train_epoch_w_accuracy, curr_train_step = fit(model, train_dataloader,
+                                                                                            train_dataset,
+                                                                                            optimizer,
+                                                                                            config["criterion"], device,
+                                                                                            step_train,
+                                                                                            config["penalty"])
     step_train += curr_train_step
 
     # Validate model
-    val_epoch_loss, val_epoch_u_accuracy, val_epoch_w_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"], device,
-                                                  step_val)
+    val_epoch_loss, val_epoch_u_accuracy, val_epoch_w_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"], device, step_val)
     step_val += 1
 
     train_loss.append(train_epoch_loss)
@@ -205,15 +256,14 @@ for epoch in range(config["epochs"]):
     print(f'Val Loss: {val_epoch_loss:.4f}, Val UA: {val_epoch_u_accuracy:.2f}, Val WA: {val_epoch_w_accuracy:.2f}')
 
     # Early stopping
-    if val_epoch_loss > last_loss:
-        trigger_times += 1
-        if trigger_times >= patience:
-            print('Early stopping!')
+    if val_epoch_loss > last_best_loss:
+        trigger_times_best += 1
+        if trigger_times_best >= config["patience"]:
+            print('\nEarly stopping! \n loss has not improved from lowest loss.')
             break
     else:
-        trigger_times = 0
-
-    last_loss = val_epoch_loss
+        trigger_times_best = 0
+        last_best_loss = val_epoch_loss
 
     # Update learning rate scheduler
     #scheduler.step(val_epoch_accuracy)
@@ -222,9 +272,9 @@ for epoch in range(config["epochs"]):
 Save model
 """
 
-# serialize the model to disk
-print('Saving model...')
-torch.save(model.state_dict(), data_dir + "outputs/model.pth")
+# # serialize the model to disk
+# print('Saving model...')
+# torch.save(model.state_dict(), data_dir + "outputs/fine_tuned_LHS_branch.pth")
 
 print('TRAINING COMPLETE')
 
@@ -244,7 +294,7 @@ test_dataset = IemocapDataset(labels_file=test_label_files,
 test_dataloader = DataLoader(test_dataset, batch_size=config["batch_size"],
                              shuffle=False, num_workers=0, collate_fn=collate_batch)
 
-test_loss, test_unweighted_accuracy, test_weighted_accuracy = test(model, test_dataloader, test_dataset, config["criterion"], device)
+test_loss, test_unweighted_accuracy, test_weighted_accuracy, test_class_accuracy = test(model, test_dataloader, test_dataset, config["criterion"], device)
 
 print(f"Test Loss: {test_loss:.4f}, Test UA: {test_unweighted_accuracy:.2f}, Test WA: {test_weighted_accuracy:.2f}")
 wandb.run.summary({"test_unweighted_accuracy": test_unweighted_accuracy, "test_weighted_accuracy": test_weighted_accuracy, "test_loss": test_loss})

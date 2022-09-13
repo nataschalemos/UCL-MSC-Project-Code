@@ -110,7 +110,9 @@ config = {
     "factor": 0.5,
     "criterion": multi_margin_loss.to(device),
     "context_window": int(context_window),
-    "freeze_models": True
+    "freeze_models": True,
+    "penalty": True,
+    "log_results": True
 }
 
 # # Start a W&B run

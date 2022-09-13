@@ -10,7 +10,7 @@ import wandb
 from torchmetrics import Accuracy
 
 # validation function
-def validate(model, test_dataloader, val_dataset, criterion, device, step):
+def validate(model, test_dataloader, val_dataset, criterion, device, step, log_results):
 
     print('Validating')
 
@@ -55,7 +55,8 @@ def validate(model, test_dataloader, val_dataset, criterion, device, step):
         val_unweighted_accuracy = val_running_u_acc / counter
         val_weighted_accuracy = val_running_w_acc / counter
 
-        # log metrics inside your val loop to visualize model performance
-        wandb.log({"val": {"loss": val_loss, "unweighted_accuracy": val_unweighted_accuracy, "weighted_accuracy": val_weighted_accuracy, "custom_step_val": step}})
+        if log_results:
+            # log metrics inside your val loop to visualize model performance
+            wandb.log({"val": {"loss": val_loss, "unweighted_accuracy": val_unweighted_accuracy, "weighted_accuracy": val_weighted_accuracy, "custom_step_val": step}})
 
         return val_loss, val_unweighted_accuracy, val_weighted_accuracy
