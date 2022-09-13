@@ -10,8 +10,18 @@ from tqdm import tqdm
 import wandb
 import numpy as np
 
+from torch.autograd import Variable
+
 
 def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, step):
+
+    ##
+    I = Variable(torch.zeros(16, 5, 5)) # bs, att_heads, att_heads
+    for i in range(16):
+        for j in range(5):
+            I.data[i][j][j] = 1
+    I = I.to(device)
+    ##
 
     print('Training')
 
@@ -49,8 +59,18 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
 
         # compute batch loss
         loss = criterion(output_all.to(device), target.to(device))
-        train_running_loss += loss.item()
-        running_loss += loss.item()
+
+        #train_running_loss += loss.item() # replace current loss with penalized loss
+        #running_loss += loss.item() # replace current loss with penalized loss
+
+        ##
+        # add penalization term
+        attention = output_TAB.to(device)
+        attentionT = torch.transpose(attention, 1, 2).contiguous()
+        extra_loss = Frobenius(torch.bmm(attention, attentionT.to(device)) - I[:attention.size(0)])
+        loss += 0.3 * extra_loss # penalization coef=0.3
+        ##
+
         _, preds = torch.max(output_all.data, 1)
 
         # add number of correct predictions
@@ -84,3 +104,11 @@ def fit(model, train_dataloader, train_dataset, optimizer, criterion, device, st
     train_weighted_accuracy = train_running_w_acc / counter
 
     return train_loss, train_unweighted_accuracy, train_weighted_accuracy, step
+
+def Frobenius(mat):
+    size = mat.size()
+    if len(size) == 3:  # batched matrix
+        ret = (torch.sum(torch.sum((mat ** 2), 1), 2).squeeze() + 1e-10) ** 0.5
+        return torch.sum(ret) / size[0]
+    else:
+        raise Exception('matrix for computing Frobenius norm should be with 3 dims')
