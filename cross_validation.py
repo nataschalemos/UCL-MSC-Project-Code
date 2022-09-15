@@ -38,10 +38,14 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
         id_list = ["_F", "_M"]
         random.shuffle(id_list)
         kfold_total_splits_1.append(split_sess + tuple([id_list]))
-        id_list.reverse()
-        kfold_total_splits_2.append(split_sess + tuple([id_list]))
+        #id_list.reverse()
+        #kfold_total_splits_2.append(split_sess + tuple([id_list.reverse()]))
+        kfold_total_splits_2.append(split_sess + tuple([list(reversed(id_list))]))
+
 
     kfold_total = kfold_total_splits_1 + kfold_total_splits_2
+    a=kfold_total[:5]
+    b=kfold_total[5:]
 
     print("\nStart 10-Fold Cross-Validation Procedure")
 
