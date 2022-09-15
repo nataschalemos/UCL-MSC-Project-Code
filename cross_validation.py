@@ -10,13 +10,14 @@ from fairseq.models.roberta import RobertaModel
 import torch
 
 from utils import collate_tokens, collater, get_num_sentences, collate_batch
-from model_structure import newbob, Fusion
+from model_structure import newbob, Fusion, LHS
 from train_function import fit
 from validation_function import validate
 from test_function import test
+from finetune_ssl import finetune
 
 
-def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, models_dir):
+def KfoldCv(fold, seed, config, config_finetune, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, models_dir):
 
     # Store results for each run
     train_UA_runs = np.zeros(fold*2)
@@ -44,8 +45,6 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
 
 
     kfold_total = kfold_total_splits_1 + kfold_total_splits_2
-    a=kfold_total[:5]
-    b=kfold_total[5:]
 
     print("\nStart 10-Fold Cross-Validation Procedure")
 
@@ -55,8 +54,8 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
     for run, split_sess in tqdm(enumerate(kfold_total), total=fold*2):
 
         # Start a W&B run
-        # TODO: change from 3 to 4 before comitting code
-        wandb_run = wandb.init(project="run-new-model-cv-4", group=group_id, name="run_"+str(run), entity="natascha-msc-project", config=config)
+        # TODO: change for different tests
+        wandb_run = wandb.init(project="run_cv_with_finetune_1", group=group_id, name="run_"+str(run), entity="natascha-msc-project", config=config)
         # Save model inputs and hyperparameters
         wandb_run.config
 
@@ -83,8 +82,33 @@ def KfoldCv(fold, seed, config, label_files, sessions, max_text_tokens, max_audi
                                                             device, max_text_tokens, max_audio_tokens)
 
         # Load sub-models
-        roberta = torch.hub.load('pytorch/fairseq', 'roberta.large').to(device)
-        speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt').to(device)
+        #roberta = torch.hub.load('pytorch/fairseq', 'roberta.large').to(device)
+        #speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt').to(device)
+
+        if config["finetune"]:
+            "Jointly fine-tuning SSL models..."
+            # Finetune sub-models
+            finetune(data_dir, models_dir, config_finetune, train_dataset, val_dataset, train_dataloader,
+                     val_dataloader, device)
+
+            # Load sub-models
+            roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
+            speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
+
+            # Load finetuned sub-model weights
+            "Loading fine-tuned models"
+            model = LHS(roberta, speechBert, freeze_models=config["freeze_models"]).to(
+                device)  # TODO: check if alright to freeze these layers in this step and not later
+            model.load_state_dict(torch.load(data_dir + "outputs/fine_tuned_LHS_branch.pth"))
+
+            # Build full model using fine-tuned weights # TODO: select layers for b1 and b2 in fine-tuned model and set these as b1 and b2 in the Fusion model
+            roberta = model.b1
+            speechBert = model.b2
+
+        else:
+            # Load sub-models
+            roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
+            speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
 
         # Instantiate model class
         model = Fusion(roberta, speechBert, freeze_models=config["freeze_models"]).to(device)

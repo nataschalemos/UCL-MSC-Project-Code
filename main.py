@@ -181,8 +181,8 @@ val_dataloader = DataLoader(val_dataset, batch_size=config["batch_size"],
                             shuffle=False, num_workers=0, collate_fn=collate_batch)
 
 # Load sub-models
-roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
-speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
+# roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
+# speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
 
 if config["finetune"]:
     "Jointly fine-tuning SSL models..."
@@ -207,8 +207,8 @@ else:
     roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
     speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
 
-    # Instantiate model class
-    model = Fusion(roberta, speechBert, freeze_models=config["freeze_models"]).to(device)
+# Instantiate model class
+model = Fusion(roberta, speechBert, freeze_models=config["freeze_models"]).to(device)
 
 # Instantiate optimizer class
 optimizer = config["optimizer"](model.parameters(), lr=config["learning_rate"])
@@ -238,11 +238,12 @@ for epoch in range(config["epochs"]):
                                                                                             optimizer,
                                                                                             config["criterion"], device,
                                                                                             step_train,
-                                                                                            config["penalty"])
+                                                                                            config["penalty"],
+                                                                                            config["log_results"])
     step_train += curr_train_step
 
     # Validate model
-    val_epoch_loss, val_epoch_u_accuracy, val_epoch_w_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"], device, step_val)
+    val_epoch_loss, val_epoch_u_accuracy, val_epoch_w_accuracy = validate(model, val_dataloader, val_dataset, config["criterion"], device, step_val, config["log_results"])
     step_val += 1
 
     train_loss.append(train_epoch_loss)

@@ -111,8 +111,24 @@ config = {
     "criterion": multi_margin_loss.to(device),
     "context_window": int(context_window),
     "freeze_models": True,
-    "penalty": True,
+    "penalty": False,
+    "finetune": True,
     "log_results": True
+}
+
+# Define learning parameters for finetuning
+config_finetune = {
+    "batch_size": 16,
+    "epochs": 3,
+    "learning_rate": 5e-5,
+    "optimizer": optim.Adam,
+    "scheduler": newbob,
+    "factor": 0.5,
+    "criterion": multi_margin_loss.to(device),
+    "context_window": int(context_window),
+    "freeze_models": False,
+    "penalty": False,
+    "log_results": False
 }
 
 # # Start a W&B run
@@ -131,7 +147,7 @@ sessions = ['s_1', 's_2', 's_3', 's_4', 's_5']
 
 # Perform k-fold cross-validation
 #train_UA_runs,train_WA_runs,val_UA_runs,val_WA_runs,test_UA_runs,test_WA_runs = KfoldCv(5, seed, config, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, roberta, speechBert)
-train_UA_runs,train_WA_runs,val_UA_runs,val_WA_runs,test_UA_runs,test_WA_runs = KfoldCv(5, seed, config, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, models_dir)
+train_UA_runs,train_WA_runs,val_UA_runs,val_WA_runs,test_UA_runs,test_WA_runs = KfoldCv(5, seed, config, config_finetune, label_files, sessions, max_text_tokens, max_audio_tokens, device, data_dir, models_dir)
 
 # Calculate averages of metrics
 train_UA_avg = np.mean(train_UA_runs)
