@@ -135,7 +135,7 @@ class LHS(nn.Module):
         out = F.relu(self.layer_cat(out))  # 200,128 # TODO: check if dim fuse_dim=128 is appropriate
         out = self.layer_out(out)  # 200,4
 
-        return out
+        return out, torch.empty(1)
 
 
 
