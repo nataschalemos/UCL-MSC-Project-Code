@@ -55,7 +55,7 @@ def KfoldCv(fold, seed, config, config_finetune, label_files, sessions, max_text
 
         # Start a W&B run
         # TODO: change for different tests
-        wandb_run = wandb.init(project="run_cv_with_finetune_1", group=group_id, name="run_"+str(run), entity="natascha-msc-project", config=config)
+        wandb_run = wandb.init(project="run_cv_with_finetune_2", group=group_id, name="run_"+str(run), entity="natascha-msc-project", config=config)
         # Save model inputs and hyperparameters
         wandb_run.config
 

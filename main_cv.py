@@ -118,7 +118,7 @@ config = {
 
 # Define learning parameters for finetuning
 config_finetune = {
-    "batch_size": 16,
+    "batch_size": 2,
     "epochs": 3,
     "learning_rate": 5e-5,
     "optimizer": optim.Adam,

@@ -29,6 +29,7 @@ class IemocapDataset(Dataset):
                 on a sample.
         """
         self.labels = labels_file
+        #self.labels = labels_file[:30]
         self.dir = dir
         self.context_window = context_window
         self.device = device
