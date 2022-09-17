@@ -30,6 +30,18 @@ def finetune(data_dir, models_dir, config, train_dataset, val_dataset, train_dat
     roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
     speechBert = RobertaModel.from_pretrained(models_dir, checkpoint_file='bert_kmeans.pt')
 
+    # Freeze some layers
+    speechBert_modules = [*speechBert.model.encoder.sentence_encoder.layers[:20]]
+    Roberta_modules = [*roberta.model.encoder.sentence_encoder.layers[:20]]
+
+    for module in speechBert_modules:
+        for param in module.parameters():
+            param.requires_grad = False
+
+    for module in Roberta_modules:
+        for param in module.parameters():
+            param.requires_grad = False
+
     # Instantiate model class
     model = LHS(roberta, speechBert, freeze_models=config["freeze_models"]).to(device)
 
