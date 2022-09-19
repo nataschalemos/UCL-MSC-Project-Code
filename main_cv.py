@@ -101,7 +101,7 @@ f1_loss = L1Loss(reduction='sum')  # Note: when using this loss need to argmax p
 
 # Define learning parameters
 config = {
-    "batch_size": 16,
+    "batch_size": 2,
     "epochs": 100,
     "patience": 10,
     "learning_rate": 5e-5,
