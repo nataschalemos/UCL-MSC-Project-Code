@@ -32,7 +32,7 @@ def finetune(data_dir, models_dir, config, train_dataset, val_dataset, train_dat
 
     # Freeze some layers
     speechBert_modules = [*speechBert.model.encoder.sentence_encoder.layers[:18]]
-    Roberta_modules = [*roberta.model.encoder.sentence_encoder.layers[:18]]
+    Roberta_modules = [*roberta.model.encoder.sentence_encoder.layers[:9]]
 
     for module in speechBert_modules:
         for param in module.parameters():
