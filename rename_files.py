@@ -38,6 +38,7 @@ emb_dir = sys.argv[3]
 
 # wdir = '/Volumes/TOSHIBA EXT/Code/'
 # data_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
+# emb_dir = '/Volumes/TOSHIBA EXT/Code/IEMOCAP/'
 os.chdir(wdir)
 
 # Rename files in directories
@@ -48,3 +49,6 @@ rename_f(data_dir, emb_dir + '/')
 # rename_f(data_dir, 'FullBertEmb1/')
 # rename_f(data_dir, 'FullBertEmb2/')
 # rename_f(data_dir, 'FullBertEmb3/')
+
+#rename_f(data_dir, 'FullBertEmb4/')
+#rename_f(data_dir, 'BertEmb/')

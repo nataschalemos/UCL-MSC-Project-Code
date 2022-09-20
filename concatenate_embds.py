@@ -87,7 +87,7 @@ def concatenate_tab_embs(path_to_full_emb, context):
                 files_context_emb[num, :] = np.loadtxt(path_to_embs + file, delimiter='\t')
 
             files_context_emb_vec = files_context_emb.reshape(1, 768 * (context*2 + 1))
-            np.savetxt(path_to_full_emb + files2[0][i], files_context_emb_vec, delimiter='\t')
+            np.savetxt(path_to_full_emb + sess[i], files_context_emb_vec, delimiter='\t')
 
 # def concatenate_tab_embs_past(path_to_full_emb, context):
 #     """
