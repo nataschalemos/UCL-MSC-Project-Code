@@ -58,12 +58,14 @@ def concatenate_tab_embs(path_to_full_emb, context):
     root_dir = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/"
     path_to_embs = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/BertEmb/"
 
-    files = pd.read_csv(root_dir + "labels_train_t.txt", header=None, delimiter='\t', usecols=[0])
+    #files = pd.read_csv(root_dir + "labels_train_t.txt", header=None, delimiter='\t', usecols=[0])
+    files = pd.read_csv(root_dir + "no_labels_train_t.txt", header=None, delimiter='\t', usecols=[0])
+    files2 = pd.read_csv(root_dir + "labels_train_t.txt", header=None, delimiter='\t', usecols=[0])
 
     # Separate filenames wrt sessions
     sessions = [[] for _ in range(5)]
-    for itr, row in df.iterrows():
-        identifier = int(row.values[0].split('_')[3])
+    for itr, row in files.iterrows():
+        identifier = int(row.values[0].split('_')[2])
         sessions[identifier-1].append(row.values[0])
 
 
@@ -81,8 +83,87 @@ def concatenate_tab_embs(path_to_full_emb, context):
             upper_limit = min(i+context+1, num_embds)
             range_files = range(lower_limit, upper_limit)
             for num, idx in enumerate(range_files):
-                file = sess[idx][0]
+                file = sess[idx]
                 files_context_emb[num, :] = np.loadtxt(path_to_embs + file, delimiter='\t')
 
             files_context_emb_vec = files_context_emb.reshape(1, 768 * (context*2 + 1))
+            np.savetxt(path_to_full_emb + files2[0][i], files_context_emb_vec, delimiter='\t')
+
+# def concatenate_tab_embs_past(path_to_full_emb, context):
+#     """
+#     Create concatenations for TAB input
+#     - concatenate context [-context, 0] BERT embeddings to create input vectors for tab with dims (1, 768 * (context + 1)) for each utterance
+#     """
+#
+#     #TODO: for now using zero padding but we can try to pad with 1's
+#
+#     root_dir = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/"
+#     path_to_embs = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/BertEmb/"
+#
+#     files = pd.read_csv(root_dir + "labels_train_t.txt", header=None, delimiter='\t', usecols=[0])
+#
+#     # Separate filenames wrt sessions
+#     sessions = [[] for _ in range(5)]
+#     for itr, row in files.iterrows():
+#         identifier = int(row.values[0].split('_')[3])
+#         sessions[identifier-1].append(row.values[0])
+#
+#
+#     prog_bar = tqdm(enumerate(sessions), total=len(sessions))
+#
+#     # Loop over session files
+#     #for sess in sessions:
+#     for _, sess in prog_bar:
+#         # Compute total number of embeddings after grouping into (context + 1) context embeddings (stays the same when using overlap)
+#         num_embds = len(sess)
+#         for i in range(num_embds):
+#             files_context_emb = np.zeros(((context + 1), 768))
+#
+#             lower_limit = max(i-context, 0)
+#             upper_limit = min(i+1+context, num_embds)
+#             range_files = range(lower_limit, upper_limit)
+#             for num, idx in enumerate(range_files):
+#                 file = sess[idx][0]
+#                 files_context_emb[num, :] = np.loadtxt(path_to_embs + file, delimiter='\t')
+#
+#             files_context_emb_vec = files_context_emb.reshape(1, 768 * (context + 1))
+#             np.savetxt(path_to_full_emb + sess[i][0], files_context_emb_vec, delimiter='\t')
+
+def concatenate_tab_embs_past(path_to_full_emb, context):
+    """
+    Create concatenations for TAB input
+    - concatenate context [-context, 0] BERT embeddings to create input vectors for tab with dims (1, 768 * (context + 1)) for each utterance
+    """
+
+    #TODO: for now using zero padding but we can try to pad with 1's
+
+    root_dir = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/"
+    path_to_embs = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/FullBertEmb2/"
+
+    files = pd.read_csv(root_dir + "labels_train_t.txt", header=None, delimiter='\t', usecols=[0])[0]
+
+    prog_bar = tqdm(enumerate(files), total=len(files))
+
+    for _, file in prog_bar:
+        files_context_emb = np.loadtxt(path_to_embs + file, delimiter='\t')
+        past_context_emb = files_context_emb[768:768*(context+2)]
+        past_context_emb = past_context_emb.reshape(1, 768 * (context + 1))
+        np.savetxt(path_to_full_emb + file, past_context_emb, delimiter='\t')
+
+    # Loop over session files
+    #for sess in sessions:
+    for _, sess in prog_bar:
+        # Compute total number of embeddings after grouping into (context + 1) context embeddings (stays the same when using overlap)
+        num_embds = len(sess)
+        for i in range(num_embds):
+            files_context_emb = np.zeros(((context + 1), 768))
+
+            lower_limit = max(i-context, 0)
+            upper_limit = min(i+1+context, num_embds)
+            range_files = range(lower_limit, upper_limit)
+            for num, idx in enumerate(range_files):
+                file = sess[idx][0]
+                files_context_emb[num, :] = np.loadtxt(path_to_embs + file, delimiter='\t')
+
+            files_context_emb_vec = files_context_emb.reshape(1, 768 * (context + 1))
             np.savetxt(path_to_full_emb + sess[i][0], files_context_emb_vec, delimiter='\t')

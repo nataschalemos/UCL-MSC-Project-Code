@@ -1,4 +1,13 @@
 """
+*remove*
+
+JUST FOR ABLATION STUDIES: ATTENTION HEADS
+
+- TEST SET: SESSION 5
+- HEADS: 3
+- (context window=3)
+
+-------------------------------------------------------------------------------------
 This script is used to train and evaluate a model for multimodal emotion recognition.
 For new implementation of dataset loader
 
@@ -25,7 +34,7 @@ from dataset_loader import IemocapDataset, ToTensor
 from train_function import fit
 from validation_function import validate
 from test_function import test
-from model_structure_6 import newbob, Fusion, LHS
+from model_structure_7 import newbob, Fusion, LHS
 from utils import collate_tokens, collater, get_num_sentences, collate_batch
 from finetune_ssl import finetune
 
@@ -45,8 +54,8 @@ wdir = sys.argv[1]
 data_dir = sys.argv[2]
 # Define directory with downloaded models
 models_dir = sys.argv[3]
-# Define window for BERT sentence context embeddings (1, 2 or 3)
-context_window = sys.argv[4]
+# Define window for BERT sentence context embeddings (0)
+cw = sys.argv[4]
 # Define max sequence length for text tokens
 max_text_tokens = sys.argv[5]
 # Define max sequence length for audio tokens
@@ -59,7 +68,7 @@ max_audio_tokens = sys.argv[6]
 # # Define directory with downloaded models
 # models_dir = wdir + 'Models/bert_kmeans/'
 # # Define window for BERT sentence context embeddings
-# context_window = 3
+context_window = 3
 # # Define max sequence length for text tokens
 # max_text_tokens = 256
 # # Define max sequence length for audio tokens
@@ -71,7 +80,7 @@ labels_file = data_dir + 'labels_train_t.txt'
 # Define path to directory with TSB and TAB input embeddings
 root_dir_Roberta = data_dir + 'GPT2Tokens'
 root_dir_SpeechBERT = data_dir + 'vqw2vTokens'
-root_dir_TAB = data_dir + 'FullBertEmb' + str(context_window)
+root_dir_TAB = data_dir + 'BertEmb'
 root_dir_text = data_dir + 'Text'
 root_dir_audio = data_dir + 'Audio'
 
@@ -109,7 +118,7 @@ config = {
     "context_window": int(context_window),
     "freeze_models": True,
     "penalty": False,
-    "finetune": True,
+    "finetune": False,
     "log_results": True
 }
 
@@ -129,7 +138,7 @@ config_finetune = {
 }
 
 # Start a W&B run
-wandb.init(project="sess_5_setup_with_finetuned", entity="natascha-msc-project", config=config)
+wandb.init(project="AS_setup_1_heads_3", entity="natascha-msc-project", config=config)
 # Save model inputs and hyperparameters
 wandb.config
 

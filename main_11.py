@@ -1,4 +1,16 @@
 """
+*remove*
+
+JUST FOR ABLATION STUDIES: PENALTY
+
+- TEST SET: SESSION 5
+-  PENALTY: TRUE
+- (models: freeze)
+- (context window=3)
+- (heads=5)
+
+
+-------------------------------------------------------------------------------------
 This script is used to train and evaluate a model for multimodal emotion recognition.
 For new implementation of dataset loader
 
@@ -25,7 +37,7 @@ from dataset_loader import IemocapDataset, ToTensor
 from train_function import fit
 from validation_function import validate
 from test_function import test
-from model_structure_6 import newbob, Fusion, LHS
+from model_structure import newbob, Fusion, LHS
 from utils import collate_tokens, collater, get_num_sentences, collate_batch
 from finetune_ssl import finetune
 
@@ -45,8 +57,8 @@ wdir = sys.argv[1]
 data_dir = sys.argv[2]
 # Define directory with downloaded models
 models_dir = sys.argv[3]
-# Define window for BERT sentence context embeddings (1, 2 or 3)
-context_window = sys.argv[4]
+# Define window for BERT sentence context embeddings (0)
+cw= sys.argv[4]
 # Define max sequence length for text tokens
 max_text_tokens = sys.argv[5]
 # Define max sequence length for audio tokens
@@ -59,7 +71,7 @@ max_audio_tokens = sys.argv[6]
 # # Define directory with downloaded models
 # models_dir = wdir + 'Models/bert_kmeans/'
 # # Define window for BERT sentence context embeddings
-# context_window = 3
+context_window = 3
 # # Define max sequence length for text tokens
 # max_text_tokens = 256
 # # Define max sequence length for audio tokens
@@ -108,14 +120,14 @@ config = {
     "criterion": multi_margin_loss.to(device),
     "context_window": int(context_window),
     "freeze_models": True,
-    "penalty": False,
-    "finetune": True,
+    "penalty": True,
+    "finetune": False,
     "log_results": True
 }
 
 # Define learning parameters for finetuning
 config_finetune = {
-    "batch_size": 16,
+    "batch_size": 2,
     "epochs": 3,
     "learning_rate": 5e-5,
     "optimizer": optim.Adam,
@@ -129,7 +141,7 @@ config_finetune = {
 }
 
 # Start a W&B run
-wandb.init(project="sess_5_setup_with_finetuned", entity="natascha-msc-project", config=config)
+wandb.init(project="AS_setup_1_penalty", entity="natascha-msc-project", config=config)
 # Save model inputs and hyperparameters
 wandb.config
 
