@@ -50,18 +50,18 @@ torch.manual_seed(seed)
 Variables to define - change the variables below accordingly (~ should only have to change wdir)
 """
 
-# Define path to directory with files
-wdir = sys.argv[1]
-# Define directory with data
-data_dir = sys.argv[2]
-# Define directory with downloaded models
-models_dir = sys.argv[3]
-# Define window for BERT sentence context embeddings (1, 2 or 3)
-context_window = sys.argv[4]
-# Define max sequence length for text tokens
-max_text_tokens = sys.argv[5]
-# Define max sequence length for audio tokens
-max_audio_tokens = sys.argv[6]
+# # Define path to directory with files
+# wdir = sys.argv[1]
+# # Define directory with data
+# data_dir = sys.argv[2]
+# # Define directory with downloaded models
+# models_dir = sys.argv[3]
+# # Define window for BERT sentence context embeddings (1, 2 or 3)
+# context_window = sys.argv[4]
+# # Define max sequence length for text tokens
+# max_text_tokens = sys.argv[5]
+# # Define max sequence length for audio tokens
+# max_audio_tokens = sys.argv[6]
 
 # # Define path to directory with files
 # wdir = '/Volumes/TOSHIBA EXT/Code/'
@@ -155,11 +155,15 @@ test_label_files = full_test_label_files[full_test_label_files[0].str.contains("
 # Print number of sentences per emotion in each train/val set
 train_num = get_num_sentences(train_label_files)
 val_num = get_num_sentences(val_label_files)
+test_num = get_num_sentences(test_label_files)
 print("\nNumber of sentences per emotion: ")
 print("Train dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".format(train_num[0], train_num[1],
                                                                                      train_num[2], train_num[3]))
 print("Val dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".format(val_num[0], val_num[1], val_num[2],
                                                                                    val_num[3]))
+
+print("Test dataset: angry = {}, happy/excited = {}, sad = {}, neutral = {}".format(test_num[0], test_num[1], test_num[2],
+                                                                                   test_num[3]))
 
 # Store number of utterances in each set for this cv split
 wandb.run.summary["train_utterances"] = len(train_label_files)

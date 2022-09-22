@@ -49,7 +49,7 @@ class SelfAttentiveLayer(nn.Module):
 
 
 class Time_async(nn.Module):
-    def __init__(self, bert_dim=768, atten_in_dim=64, attention_unit=64, num_heads=5):
+    def __init__(self, bert_dim=768, atten_in_dim=64, attention_unit=64, num_heads=3):
         super(Time_async, self).__init__()
         self.layer_bert = nn.Linear(bert_dim, atten_in_dim)
         self.bert_atten = SelfAttentiveLayer(atten_in_dim, attention_unit, num_heads)
@@ -74,7 +74,7 @@ class Fusion(nn.Module):  # (note: this class defines the whole model)
         self.b1 = roberta
         self.b2 = speechBert
         self.b3 = Time_async()
-        self.layer_cat = nn.Linear(1024 + 768 + 64 * 5, fuse_dim)
+        self.layer_cat = nn.Linear(1024 + 768 + 64 * 3, fuse_dim)
         self.layer_out = nn.Linear(fuse_dim, output_dim, bias=False)
         #self.dropout = nn.Dropout(p=dropout_rate)
 
