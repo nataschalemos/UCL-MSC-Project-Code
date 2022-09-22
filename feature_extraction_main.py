@@ -18,8 +18,8 @@ print("Current working directory: {0}".format(os.getcwd()))
 Create embeddings separately
 """
 #
-# # Create BERT embeddings
-# create_bert_emb()
+# Create BERT embeddings
+create_bert_emb()
 #
 # # Create VQ-Wav2Vec tokens
 # data_processor = EmotionDataPreprocessing()
@@ -42,8 +42,8 @@ Create final TAB inputs ([-context,+context] context BERT embeddings)
 # path_to_full_emb3 = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/FullBertEmb3/"
 # concatenate_tab_embs(path_to_full_emb3, 3)
 
-path_to_full_emb4 = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/FullBertEmb4/"
-concatenate_tab_embs(path_to_full_emb4, 4)
+# path_to_full_emb4 = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/FullBertEmb4/"
+# concatenate_tab_embs(path_to_full_emb4, 4)
 
 # path_to_full_emb_past_2 = "/Volumes/TOSHIBA EXT/Code/IEMOCAP/FullBertEmbPast2/"
 # concatenate_tab_embs_past(path_to_full_emb_past_2, 2)

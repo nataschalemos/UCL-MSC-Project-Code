@@ -110,7 +110,7 @@ f1_loss = L1Loss(reduction='sum')  # Note: when using this loss need to argmax p
 # Define learning parameters
 config = {
     "batch_size": 16,
-    "epochs": 100,
+    "epochs": 50,
     "patience": 10,
     "learning_rate": 5e-5,
     "optimizer": optim.Adam,
@@ -147,12 +147,10 @@ wandb.config
 # Split data into training and validation data
 label_files = pd.read_csv(labels_file, header=None, delimiter='\t')
 
-full_train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
-# full_train_label_files = label_files[label_files[0].str.contains('s_1')]
-val_label_files = full_train_label_files.sample(frac=0.1, random_state=seed)
-train_label_files = full_train_label_files.drop(val_label_files.index)
-
-test_label_files = label_files[label_files[0].str.contains('s_5')]
+train_label_files = label_files[label_files[0].str.contains('s_1|s_2|s_3|s_4')]
+full_test_label_files = label_files[label_files[0].str.contains('s_5')]
+val_label_files = full_test_label_files[full_test_label_files[0].str.contains("_F")]
+test_label_files = full_test_label_files[full_test_label_files[0].str.contains("_M")]
 
 # Print number of sentences per emotion in each train/val set
 train_num = get_num_sentences(train_label_files)
