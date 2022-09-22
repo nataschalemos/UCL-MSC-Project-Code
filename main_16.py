@@ -50,18 +50,18 @@ torch.manual_seed(seed)
 Variables to define - change the variables below accordingly (~ should only have to change wdir)
 """
 
-# # Define path to directory with files
-# wdir = sys.argv[1]
-# # Define directory with data
-# data_dir = sys.argv[2]
-# # Define directory with downloaded models
-# models_dir = sys.argv[3]
-# # Define window for BERT sentence context embeddings (1, 2 or 3)
-# context_window = sys.argv[4]
-# # Define max sequence length for text tokens
-# max_text_tokens = sys.argv[5]
-# # Define max sequence length for audio tokens
-# max_audio_tokens = sys.argv[6]
+# Define path to directory with files
+wdir = sys.argv[1]
+# Define directory with data
+data_dir = sys.argv[2]
+# Define directory with downloaded models
+models_dir = sys.argv[3]
+# Define window for BERT sentence context embeddings (1, 2 or 3)
+cw = sys.argv[4]
+# Define max sequence length for text tokens
+max_text_tokens = sys.argv[5]
+# Define max sequence length for audio tokens
+max_audio_tokens = sys.argv[6]
 
 # # Define path to directory with files
 # wdir = '/Volumes/TOSHIBA EXT/Code/'

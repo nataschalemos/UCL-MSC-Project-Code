@@ -29,7 +29,7 @@ from torchvision import models
 from pytorch_metric_learning import losses
 import wandb
 
-from dataset_loader import IemocapDataset, ToTensor
+from dataset_loader5 import IemocapDataset, ToTensor
 from train_function import fit
 from validation_function import validate
 from test_function import test
@@ -79,7 +79,7 @@ labels_file = data_dir + 'labels_train_t.txt'
 # Define path to directory with TSB and TAB input embeddings
 root_dir_Roberta = data_dir + 'GPT2Tokens'
 root_dir_SpeechBERT = data_dir + 'vqw2vTokens'
-root_dir_TAB = data_dir + 'BertEmb'
+root_dir_TAB = data_dir + 'FullBertEmbPast2'
 root_dir_text = data_dir + 'Text'
 root_dir_audio = data_dir + 'Audio'
 
